@@ -1,2 +1,1 @@
 # Microfrontend contept examples
-
