@@ -1,6 +1,7 @@
 node_modules
 buld
 out
+dist
 
 # IDEs and editors
 .idea
