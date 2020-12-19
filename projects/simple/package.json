@@ -4,22 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "install:cart": "cd ./cart && npm install",
-    "install:container": "cd ./container && npm install",
-    "install:products": "cd ./products && npm install",
-    "preinstall": "npm run install:cart && npm run install:container && npm run install:products",
-    "install": "npm install",
-    "start:cart": "cd ./cart && npm start",
-    "start:container": "cd ./container && npm start",
-    "start:products": "cd ./products && npm start",
-    "start": "concurrently \"npm run start:cart\" \"npm run start:container\" \"npm run start:products\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "lerna run start --parallel"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "concurrently": "^5.0.0",
     "lerna": "^3.22.1"
   }
 }
