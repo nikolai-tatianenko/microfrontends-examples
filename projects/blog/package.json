@@ -1,0 +1,19 @@
+{
+  "name": "blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "lerna": "^3.22.1"
+  },
+  "scripts": {
+    "start": "lerna run start --parallel"
+  },
+  "keywords": [
+    "microfrontend"
+  ],
+  "author": "",
+  "license": "ISC"
+}
