@@ -1,6 +1,6 @@
 import Container from "@material-ui/core/Container";
 import { Heading } from "../01-Atoms/Heading";
-import { Footer } from "../04-Templates/Footer";
+import { Footer } from "./Footer";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -41,3 +41,4 @@ export const Layout = ({ title, children }) => {
     </>
   );
 };
+export default Layout;

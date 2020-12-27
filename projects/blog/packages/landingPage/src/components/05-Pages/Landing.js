@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 import { commerce, image, lorem } from "faker";
 import { ContentGrid } from "../03-Organisms/ContentGrid";
-import { Layout } from "../05-Pages/Layout";
+import { Layout } from "../04-Templates/Layout";
 
 const useStyles = makeStyles((theme) => ({
   "@global": {
