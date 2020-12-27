@@ -5,8 +5,7 @@ import faker from "faker";
  * @param {HTMLElement} el - The element to mount the products text.
  */
 const mount = (el) => {
-  const cartText = `<div>You have ${faker.random.number()} items in your cart</div>`;
-
+  const cartText = `<div>${faker.random.number()} items in your cart</div>`;
   el.innerHTML = cartText;
 };
 
@@ -20,6 +19,7 @@ if (process.env.NODE_ENV === "development") {
     mount(el);
   }
 }
+
 /**
  * For container development or production, export the mount function.
  */
