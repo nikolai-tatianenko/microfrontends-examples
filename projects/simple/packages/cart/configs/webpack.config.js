@@ -10,12 +10,26 @@ module.exports = {
   devServer: {
     port: process.env.PORT || 8082,
   },
+  resolve: {
+    extensions: [".ts", ".tsx", ".js", ".jsx"],
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(ts|tsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "ts-loader",
+        },
+      },
+    ],
+  },
   plugins: [
     new ModuleFederationPlugin({
       name: "cart",
       filename: "remoteEntry.js",
       exposes: {
-        "./CartShow": "./src/bootstrap",
+        "./CartApp": "./src/bootstrap",
       },
       // Shared component between products and cart
       shared: ["faker"],

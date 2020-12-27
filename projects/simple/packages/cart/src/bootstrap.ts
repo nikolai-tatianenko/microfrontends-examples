@@ -4,7 +4,7 @@ import faker from "faker";
  * Mount function to render products
  * @param {HTMLElement} el - The element to mount the products text.
  */
-const mount = (el) => {
+const mount = (el: Element): void => {
   const cartText = `<div>${faker.random.number()} items in your cart</div>`;
   el.innerHTML = cartText;
 };
