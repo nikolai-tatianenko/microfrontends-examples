@@ -2,9 +2,9 @@ import faker from "faker";
 
 /**
  * Mounts the products text with a random number of items.
- * @param {HTMLElement} el - The element to mount the products text.
+ * @param {Element} el - The element to mount the products text.
  */
-const mount = (el) => {
+const mount = (el: Element): void => {
   let products = "";
 
   for (let i = 0; i < 5; i++) {

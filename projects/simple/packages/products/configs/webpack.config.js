@@ -9,6 +9,20 @@ module.exports = {
   devServer: {
     port: process.env.PORT || 8081,
   },
+  resolve: {
+    extensions: [".ts", ".tsx", ".js", ".jsx"],
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(ts|tsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: "ts-loader",
+        },
+      },
+    ],
+  },
   plugins: [
     new ModuleFederationPlugin({
       name: "products",
