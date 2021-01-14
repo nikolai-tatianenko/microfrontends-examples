@@ -7,7 +7,7 @@ import {
 import { createBrowserHistory } from "history";
 
 import Progress from "./components/01-Atoms/Progress";
-import Header from "./components/04-Templates/Header";
+import Header from "./components/Header";
 
 const MarketingLazy = lazy(() => import("./components/05-Pages/LandingPage"));
 const AuthLazy = lazy(() => import("./components/05-Pages/AuthApp"));
