@@ -6,7 +6,9 @@
   "scripts": {
     "start": "webpack serve --config ./configs/webpack.config.js"
   },
-  "keywords": [],
+  "keywords": [
+    "microfrontend"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
@@ -17,6 +19,7 @@
     "webpack-dev-server": "^3.11.0"
   },
   "devDependencies": {
+    "@types/faker": "^4.1.0",
     "dotenv-webpack": "^5.0.0"
   }
 }
