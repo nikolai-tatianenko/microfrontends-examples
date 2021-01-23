@@ -6,9 +6,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Layout from "../04-Templates/Layout";
 
-export default function About() {
+export function AboutPage() {
   return (
-    <Layout title={"About"}>
+    <Layout title={"AboutPage"}>
       <Container maxWidth="md" component="main">
         <Grid container spacing={5} alignItems="flex-end">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam
@@ -19,3 +19,5 @@ export default function About() {
     </Layout>
   );
 }
+
+export default AboutPage;

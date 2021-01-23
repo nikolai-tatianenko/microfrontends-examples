@@ -1,3 +1,3 @@
-export * from './Landing'
-export * from './About'
-export * from './Pricing'
+export * from './LandingPage'
+export * from './AboutPage'
+export * from './PricingPage'

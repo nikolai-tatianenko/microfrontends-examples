@@ -154,7 +154,7 @@ const FooterUpper = () => {
   );
 };
 
-export default function Pricing() {
+export function PricingPage() {
   const classes = useStyles();
 
   return (
@@ -248,3 +248,5 @@ export default function Pricing() {
     </React.Fragment>
   );
 }
+
+export default PricingPage;
