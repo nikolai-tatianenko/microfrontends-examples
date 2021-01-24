@@ -1,8 +1,9 @@
-import Container from "@material-ui/core/Container";
-import { Heading } from "../01-Atoms/Heading";
-import { Footer } from "./Footer";
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React from 'react';
+import Container from '@material-ui/core/Container';
+import { Heading } from '../01-Atoms/Heading';
+import { Footer } from './Footer';
+
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {

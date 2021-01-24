@@ -1,5 +1,5 @@
 import Typography from "@material-ui/core/Typography";
-import { Link } from "react-router-dom"; // Assuming you have react-router-dom installed
+import { Link } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Copyright } from "../01-Atoms/Copyright";
 import React from "react";
