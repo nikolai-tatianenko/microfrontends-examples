@@ -3,6 +3,9 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
 const packageJson = require("../package.json");
 const commonConfig = require("./webpack.common");
 
+const COMPONENT_NAME = process.env.COMPONENT_NAME || "DashboardApp";
+const MACHINE_NAME = process.env.MACHINE_NAME || "dashboard";
+
 const prodConfig = {
   mode: "production",
   output: {
@@ -11,10 +14,10 @@ const prodConfig = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "dashboard",
+      name: MACHINE_NAME,
       filename: "remoteEntry.js",
       exposes: {
-        "./DashboardApp": "./src/bootstrap",
+        [`./${COMPONENT_NAME}`]: "./src/bootstrap",
       },
       shared: packageJson.dependencies,
     }),
