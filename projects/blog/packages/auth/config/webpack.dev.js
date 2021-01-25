@@ -4,8 +4,9 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
 const commonConfig = require("./webpack.common");
 const packageJson = require("../package.json");
 
-// PORT is the port number that the dev server will run on
 const PORT = process.env.PORT || 8082;
+const COMPONENT_NAME = process.env.COMPONENT_NAME || "AuthApp";
+const MACHINE_NAME = process.env.MACHINE_NAME || "auth";
 
 const devConfig = {
   mode: "development",
@@ -20,10 +21,10 @@ const devConfig = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "auth",
+      name: MACHINE_NAME,
       filename: "remoteEntry.js",
       exposes: {
-        "./AuthApp": "./src/bootstrap",
+        [`./${COMPONENT_NAME}`]: "./src/bootstrap",
       },
       shared: packageJson.dependencies,
     }),
