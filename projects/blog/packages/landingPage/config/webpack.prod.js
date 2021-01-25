@@ -3,6 +3,9 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
 const packageJson = require("../package.json");
 const commonConfig = require("./webpack.common");
 
+const COMPONENT_NAME = process.env.COMPONENT_NAME || "LandingPage";
+const MACHINE_NAME = process.env.MACHINE_NAME || "landingPage";
+
 const prodConfig = {
   mode: "production",
   output: {
@@ -11,10 +14,10 @@ const prodConfig = {
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "landingPage",
+      name: MACHINE_NAME,
       filename: "remoteEntry.js",
       exposes: {
-        "./LandingPage": "./src/bootstrap",
+        [`./${COMPONENT_NAME}`]: "./src/bootstrap",
       },
       shared: packageJson.dependencies,
     }),

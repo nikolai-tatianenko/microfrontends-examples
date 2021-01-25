@@ -4,23 +4,28 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
 const commonConfig = require("./webpack.common");
 const packageJson = require("../package.json");
 
+// PORT is the port number that the dev server will run on
+const PORT = process.env.PORT || 8081;
+const COMPONENT_NAME = process.env.COMPONENT_NAME || "LandingPage";
+const MACHINE_NAME = process.env.MACHINE_NAME || "landingPage";
+
 const devConfig = {
   mode: "development",
   output: {
-    publicPath: "http://localhost:8081/",
+    publicPath: `http://localhost:${PORT}/`,
   },
   devServer: {
-    port: 8081,
+    port: PORT,
     historyApiFallback: {
       index: "index.html",
     },
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: "landingPage",
+      name: MACHINE_NAME,
       filename: "remoteEntry.js",
       exposes: {
-        "./LandingPage": "./src/bootstrap",
+        [`./${COMPONENT_NAME}`]: "./src/bootstrap",
       },
       shared: packageJson.dependencies,
     }),
