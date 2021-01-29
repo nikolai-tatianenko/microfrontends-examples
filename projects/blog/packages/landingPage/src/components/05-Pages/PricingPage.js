@@ -10,9 +10,8 @@ import Typography from "@material-ui/core/Typography";
 import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
-import Box from "@material-ui/core/Box";
 import { Link as RouterLink } from "react-router-dom";
-import { Footer } from "../04-Templates/Footer";
+import {Footer} from '@blog/components'
 
 const useStyles = makeStyles((theme) => ({
   "@global": {

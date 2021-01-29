@@ -6,8 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 
 import { commerce, image, lorem } from 'faker';
-import { ContentGrid } from '../03-Organisms/ContentGrid';
-import { Layout } from '../04-Templates/Layout';
+import {ContentGrid, Layout} from '@blog/components'
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -44,7 +43,9 @@ export function LandingPage () {
   return (
     <>
       <Layout title="Main Page">
+
         <Typography variant="h5" align="center" color="textSecondary" paragraph>
+          Hello
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla eu
           sapien sit amet lectus aliquet mollis. Nulla facilisi. Nulla facilisi.
           Nulla facilisi. Nulla facilisi. Nulla facilisi.
