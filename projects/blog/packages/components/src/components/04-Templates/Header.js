@@ -7,14 +7,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Link as RouterLink } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
-  "@global": {
+  '@global': {
     ul: {
       margin: 0,
       padding: 0,
-      listStyle: "none",
+      listStyle: 'none',
     },
     a: {
-      textDecoration: "none",
+      textDecoration: 'none',
     },
   },
   appBar: {
@@ -54,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Header({ isSignedIn, onSignOut }) {
+export function Header ({ isSignedIn, onSignOut }) {
   const classes = useStyles();
 
   const onClick = () => {
@@ -89,10 +89,12 @@ export default function Header({ isSignedIn, onSignOut }) {
             to={isSignedIn ? "/" : "/auth/signin"}
             onClick={onClick}
           >
-            {isSignedIn ? "Logout" : "Login"}
+            {isSignedIn ? 'Logout' : 'Login'}
           </Button>
         </Toolbar>
       </AppBar>
     </React.Fragment>
   );
 }
+
+export default Header;
