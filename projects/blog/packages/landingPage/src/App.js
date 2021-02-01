@@ -5,9 +5,6 @@ import {
   createGenerateClassName,
 } from "@material-ui/core/styles";
 
- // import Landing from "./components/05-Pages/LandingPage";
- // import PricingPage from "./components/05-Pages/PricingPage";
- // import AboutPage from "./components/05-Pages/AboutPage";
 import { LandingPage, PricingPage, AboutPage } from './components/05-Pages';
 
 const generateClassName = createGenerateClassName({
