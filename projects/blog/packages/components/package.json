@@ -2,7 +2,9 @@
   "name": "@blog/components",
   "version": "1.0.0",
   "scripts": {
-    "start": "echo 'Start'"
+    "start": "echo 'Start'",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.0",
@@ -18,6 +20,10 @@
     "@babel/preset-env": "^7.12.1",
     "@babel/preset-react": "^7.12.1",
     "@babel/preset-typescript": "^7.12.1",
+    "@storybook/addon-actions": "^6.1.12",
+    "@storybook/addon-essentials": "^6.1.12",
+    "@storybook/addon-links": "^6.1.12",
+    "@storybook/react": "^6.1.12",
     "@types/react": "^17.0.1",
     "@types/react-dom": "^17.0.1",
     "babel-loader": "^8.1.0",
