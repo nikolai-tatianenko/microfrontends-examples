@@ -6,8 +6,7 @@ import {
 } from "@material-ui/core/styles";
 import { createBrowserHistory } from "history";
 
-import Progress from "./components/01-Atoms/Progress";
-import Header from "./components/Header";
+import { Header, Progress } from '@blog/components';
 
 const MarketingLazy = lazy(() => import("./components/05-Pages/LandingPage"));
 const AuthLazy = lazy(() => import("./components/05-Pages/AuthApp"));

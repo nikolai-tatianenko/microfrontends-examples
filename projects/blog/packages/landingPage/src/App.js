@@ -5,13 +5,12 @@ import {
   createGenerateClassName,
 } from "@material-ui/core/styles";
 
-import Landing from "./components/05-Pages/Landing";
-import Pricing from "./components/05-Pages/Pricing";
-import About from "./components/05-Pages/About";
+import { LandingPage, PricingPage, AboutPage } from './components/05-Pages';
 
 const generateClassName = createGenerateClassName({
   productionPrefix: "ma",
 });
+
 /**
  * App component.
  * @param history
@@ -23,9 +22,9 @@ export default ({ history }) => {
       <StylesProvider generateClassName={generateClassName}>
         <Router history={history}>
           <Switch>
-            <Route exact path="/About" component={About} />
-            <Route exact path="/pricing" component={Pricing} />
-            <Route path="/" component={Landing} />
+            <Route exact path="/about" component={AboutPage} />
+            <Route exact path="/pricing" component={PricingPage} />
+            <Route path="/" component={LandingPage} />
           </Switch>
         </Router>
       </StylesProvider>

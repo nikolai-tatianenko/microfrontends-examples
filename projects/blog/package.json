@@ -8,6 +8,7 @@
     "lerna": "^3.22.1"
   },
   "scripts": {
+    "prepare": "lerna clean -y && lerna bootstrap",
     "start": "lerna run start --parallel"
   },
   "keywords": [

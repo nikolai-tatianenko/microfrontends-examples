@@ -1,11 +1,12 @@
 {
-  "name": "container",
+  "name": "@blog/container",
   "version": "1.0.0",
   "scripts": {
     "start": "webpack serve --config config/webpack.dev.js",
     "build": "webpack --config config/webpack.prod.js"
   },
   "dependencies": {
+    "@blog/components": "^1.0.0",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "react": "^17.0.1",

@@ -3,20 +3,24 @@ const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPl
 const commonConfig = require("./webpack.common");
 const packageJson = require("../package.json");
 
-const port = process.env.PORT || 8080;
+// PORT is the port number that the dev server will run on
+const PORT = process.env.PORT || 8080;
 
 const devConfig = {
   mode: "development",
   output: {
-    publicPath: `http://localhost:${port}/`,
+    publicPath: `http://localhost:${PORT}/`,
   },
   devServer: {
-    port: port,
+    port: PORT,
     historyApiFallback: {
       index: "index.html",
     },
   },
   plugins: [
+    /**
+     * Get the remoteEntry.js file from each of the remote apps.
+     */
     new ModuleFederationPlugin({
       name: "container",
       remotes: {
