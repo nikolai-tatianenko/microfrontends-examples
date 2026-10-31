@@ -1,0 +1,29 @@
+{
+  "name": "@blog/dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "rspack serve --mode development --config rspack.config.cjs",
+    "build": "rspack build --mode production --config rspack.config.cjs",
+    "typecheck": "vue-tsc --noEmit -p .",
+    "test": "jest --passWithNoTests",
+    "test:integration": "TEST_KIND=integration jest --passWithNoTests"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.13.8",
+    "@blog/apollo": "workspace:*",
+    "@blog/contract": "workspace:*",
+    "@graphql-typed-document-node/core": "^3.2.0",
+    "graphql": "^16.11.0",
+    "vue": "^3.5.18"
+  },
+  "devDependencies": {
+    "@blog/api": "workspace:*",
+    "@blog/build-config": "workspace:*",
+    "@rspack/cli": "^2.3.0",
+    "@rspack/core": "^2.3.0",
+    "@rspack/dev-server": "^2.2.2",
+    "@vue/compiler-sfc": "^3.5.18",
+    "vue-loader": "^17.4.2"
+  }
+}

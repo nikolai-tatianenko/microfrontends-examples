@@ -1,0 +1,18 @@
+{
+  "name": "@blog/build-config",
+  "version": "1.0.0",
+  "private": true,
+  "description": "One Rspack + Module Federation factory for every app, and the shared Jest preset.",
+  "main": "index.cjs",
+  "exports": {
+    ".": "./index.cjs",
+    "./jest-preset": "./jest-preset.cjs"
+  },
+  "dependencies": {
+    "@module-federation/enhanced": "^2.9.2",
+    "@rspack/core": "^2.3.0",
+    "css-loader": "^7.1.2",
+    "style-loader": "^4.0.0",
+    "vue-loader": "^17.4.2"
+  }
+}

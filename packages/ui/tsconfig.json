@@ -1,0 +1,6 @@
+{
+  "extends": "../../tsconfig.base.json",
+  // Stories of the landing remote import its shadcn components through `@/`.
+  "compilerOptions": { "paths": { "@/*": ["../../apps/landing/src/*"] } },
+  "include": ["src", ".storybook", "../../apps/*/src/**/*.stories.tsx"]
+}

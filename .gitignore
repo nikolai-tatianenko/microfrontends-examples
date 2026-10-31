@@ -1,8 +1,28 @@
 node_modules
-buld
-out
 dist
+build
+out
+coverage
+storybook-static
+playwright-report
+test-results
+.turbo
 
-# IDEs and editors
+# secrets: only *.env.example is tracked
+.env
+.env.*
+!.env.example
+
+# tooling / editors
 .idea
-hidden
+.DS_Store
+
+# visual regression: baselines are committed, diffs/actuals are not
+e2e/visual/__screenshots__/**/*-actual.png
+e2e/visual/__screenshots__/**/*-diff.png
+
+# generated reports
+reports
+
+# Module Federation build diagnostics
+.mf

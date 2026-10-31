@@ -1,4 +1,13 @@
-# Ignore artifacts:
+node_modules
+dist
 build
 coverage
-dist
+storybook-static
+playwright-report
+test-results
+reports
+pnpm-lock.yaml
+.turbo
+**/src/gql
+e2e/visual/__screenshots__
+*.png

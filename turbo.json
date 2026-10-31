@@ -1,0 +1,37 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "//#codegen": {
+      "inputs": [
+        "codegen.ts",
+        "apps/api/src/**/*.ts",
+        "apps/*/src/**/*.{ts,tsx}",
+        "!apps/*/src/gql/**"
+      ],
+      "outputs": ["apps/*/src/gql/**"]
+    },
+    "build": {
+      "dependsOn": ["^build", "//#codegen"],
+      "outputs": ["dist/**"]
+    },
+    "dev": {
+      "dependsOn": ["//#codegen"],
+      "cache": false,
+      "persistent": true
+    },
+    "typecheck": {
+      "dependsOn": ["//#codegen"],
+      "outputs": []
+    },
+    "test": {
+      "dependsOn": ["//#codegen"],
+      "cache": false,
+      "outputs": []
+    },
+    "test:integration": {
+      "dependsOn": ["//#codegen"],
+      "cache": false,
+      "outputs": []
+    }
+  }
+}

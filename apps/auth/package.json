@@ -1,0 +1,35 @@
+{
+  "name": "@blog/auth",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "rspack serve --mode development --config rspack.config.cjs",
+    "build": "rspack build --mode production --config rspack.config.cjs",
+    "typecheck": "tsc -p .",
+    "test": "jest --passWithNoTests",
+    "test:integration": "TEST_KIND=integration jest --passWithNoTests"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.13.8",
+    "@blog/apollo": "workspace:*",
+    "@blog/contract": "workspace:*",
+    "@blog/ui": "workspace:*",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@graphql-typed-document-node/core": "^3.2.0",
+    "@mui/material": "^7.1.0",
+    "graphql": "^16.11.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.6.0"
+  },
+  "devDependencies": {
+    "@blog/api": "workspace:*",
+    "@blog/build-config": "workspace:*",
+    "@rspack/cli": "^2.3.0",
+    "@rspack/core": "^2.3.0",
+    "@rspack/dev-server": "^2.2.2",
+    "@storybook/react-vite": "^9.1.0",
+    "storybook": "^9.1.0"
+  }
+}

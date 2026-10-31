@@ -1,0 +1,17 @@
+{
+  "name": "@vanilla/cart",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "rspack serve --mode development --config rspack.config.cjs",
+    "build": "rspack build --mode production --config rspack.config.cjs",
+    "typecheck": "tsc -p .",
+    "test": "jest --passWithNoTests"
+  },
+  "devDependencies": {
+    "@blog/build-config": "workspace:*",
+    "@rspack/cli": "^2.3.0",
+    "@rspack/core": "^2.3.0",
+    "@rspack/dev-server": "^2.2.2"
+  }
+}

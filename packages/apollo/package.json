@@ -1,0 +1,21 @@
+{
+  "name": "@blog/apollo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Apollo client factory. The shell creates one client and injects it into every remote.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./testing": "./src/testing.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc -p .",
+    "test": "jest --passWithNoTests"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.13.8",
+    "graphql": "^16.11.0"
+  },
+  "devDependencies": {
+    "@blog/build-config": "workspace:*"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "name": "@blog/api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "GraphQL API. One schema assembled from independent domain modules.",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "build": "esbuild src/server.ts --bundle --platform=node --target=node22 --format=cjs --outfile=dist/server.cjs",
+    "start": "node dist/server.cjs",
+    "typecheck": "tsc -p .",
+    "test": "jest --passWithNoTests",
+    "test:integration": "TEST_KIND=integration jest --passWithNoTests"
+  },
+  "dependencies": {
+    "@graphql-tools/schema": "^10.0.23",
+    "@graphql-tools/utils": "^10.11.0",
+    "graphql": "^16.11.0",
+    "graphql-tag": "^2.12.6",
+    "graphql-yoga": "^5.13.5"
+  },
+  "devDependencies": {
+    "@blog/build-config": "workspace:*",
+    "esbuild": "^0.25.9",
+    "tsx": "^4.20.5"
+  },
+  "exports": {
+    "./schema": "./src/schema.ts"
+  }
+}
