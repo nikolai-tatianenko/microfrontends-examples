@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="3" failures="1" time="0.6">
+  <testsuite name="SignIn" tests="3" failures="1" time="0.6">
+    <testcase classname="SignIn" name="accepts valid email" time="0.2"/>
+    <testcase classname="SignIn" name="rejects &quot;bad&quot; email &amp; empty" time="0.2"><failure message="expected 1 to be 2">Error: expected 1 to be 2&#10;    at Object.&lt;anonymous&gt; (SignIn.test.tsx:12:5)</failure></testcase>
+    <testcase classname="SignIn" name="submits" time="0.2"/>
+  </testsuite>
+</testsuites>

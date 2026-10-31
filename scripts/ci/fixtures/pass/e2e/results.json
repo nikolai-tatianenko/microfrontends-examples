@@ -1,0 +1,57 @@
+{
+  "suites": [
+    {
+      "title": "smoke.spec.ts",
+      "file": "smoke.spec.ts",
+      "specs": [],
+      "suites": [
+        {
+          "title": "landing",
+          "file": "smoke.spec.ts",
+          "specs": [
+            {
+              "title": "renders hero",
+              "ok": true,
+              "tests": [
+                {
+                  "projectName": "chromium",
+                  "status": "expected",
+                  "results": [{ "status": "passed", "duration": 1000 }]
+                }
+              ]
+            },
+            {
+              "title": "navigates to pricing",
+              "ok": true,
+              "tests": [
+                {
+                  "projectName": "chromium",
+                  "status": "expected",
+                  "results": [{ "status": "passed", "duration": 2000 }]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "nav.spec.ts",
+      "file": "nav.spec.ts",
+      "specs": [
+        {
+          "title": "deep link works",
+          "ok": true,
+          "tests": [
+            {
+              "projectName": "chromium",
+              "status": "expected",
+              "results": [{ "status": "passed", "duration": 500 }]
+            }
+          ]
+        }
+      ],
+      "suites": []
+    }
+  ]
+}

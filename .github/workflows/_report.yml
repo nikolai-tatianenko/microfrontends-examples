@@ -1,0 +1,75 @@
+name: report
+
+# Collects every report artifact, renders one markdown report, publishes it to the
+# job summary and (same-repo PRs only) into the auto-updated block of the PR body.
+# Hand-written text in the PR description is never touched, see scripts/ci/update-pr-body.mjs.
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  report:
+    name: Report
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      # Plain Node is enough: the scripts have no dependencies, so no pnpm install here.
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+
+      # A stage that was skipped or crashed early has no artifact: that is "not run", not an error.
+      - uses: actions/download-artifact@v8
+        continue-on-error: true
+        with:
+          name: reports-unit
+          path: reports/unit
+      - uses: actions/download-artifact@v8
+        continue-on-error: true
+        with:
+          name: reports-integration
+          path: reports/integration
+      - uses: actions/download-artifact@v8
+        continue-on-error: true
+        with:
+          name: reports-e2e
+          path: reports/e2e
+      - uses: actions/download-artifact@v8
+        continue-on-error: true
+        with:
+          name: reports-visual
+          path: reports/visual
+
+      - name: Render report
+        run: node scripts/ci/report.mjs --reports-dir reports --out report.md
+
+      - name: Publish to job summary
+        run: cat report.md >> "$GITHUB_STEP_SUMMARY"
+
+      # Fork PRs get a read-only token; they keep the job summary only.
+      - name: Update PR description
+        if: github.event_name == 'pull_request' && !github.event.pull_request.head.repo.fork
+        continue-on-error: true
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: node scripts/ci/update-pr-body.mjs --file report.md
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: ci-report
+          path: report.md
+          retention-days: 14
+
+      # Last on purpose: the report above is published even when this fails.
+      # Unit and integration coverage are merged per file; any file under 80% fails the run.
+      - uses: ./.github/actions/setup
+        with:
+          codegen: "false"
+      - name: Coverage gate (unit + integration, per file)
+        run: node scripts/coverage-gate.mjs --threshold 80

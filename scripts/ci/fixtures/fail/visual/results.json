@@ -1,0 +1,41 @@
+{
+  "suites": [
+    {
+      "title": "home.spec.ts",
+      "file": "home.spec.ts",
+      "specs": [
+        {
+          "title": "home light",
+          "ok": false,
+          "tests": [
+            {
+              "projectName": "chromium",
+              "status": "unexpected",
+              "results": [
+                {
+                  "status": "failed",
+                  "duration": 900,
+                  "error": {
+                    "message": "Error: Screenshot comparison failed:\n\n  1200 pixels differ"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "home dark",
+          "ok": true,
+          "tests": [
+            {
+              "projectName": "chromium",
+              "status": "expected",
+              "results": [{ "status": "passed", "duration": 800 }]
+            }
+          ]
+        }
+      ],
+      "suites": []
+    }
+  ]
+}

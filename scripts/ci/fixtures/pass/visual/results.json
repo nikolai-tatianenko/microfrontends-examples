@@ -1,0 +1,33 @@
+{
+  "suites": [
+    {
+      "title": "home.spec.ts",
+      "file": "home.spec.ts",
+      "specs": [
+        {
+          "title": "home light",
+          "ok": true,
+          "tests": [
+            {
+              "projectName": "chromium",
+              "status": "expected",
+              "results": [{ "status": "passed", "duration": 800 }]
+            }
+          ]
+        },
+        {
+          "title": "home dark",
+          "ok": true,
+          "tests": [
+            {
+              "projectName": "chromium",
+              "status": "expected",
+              "results": [{ "status": "passed", "duration": 900 }]
+            }
+          ]
+        }
+      ],
+      "suites": []
+    }
+  ]
+}

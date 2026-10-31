@@ -1,0 +1,54 @@
+name: visual
+
+# Visual regression (Playwright toHaveScreenshot) on the production build.
+# Runs in the SAME Linux container that generates baselines, so antialiasing and
+# fonts are identical. Writes reports/visual/results.json and reports/visual/diffs/.
+on:
+  workflow_call:
+    inputs:
+      playwright-version:
+        description: Must equal the installed @playwright/test version.
+        type: string
+        required: true
+
+permissions:
+  contents: read
+
+jobs:
+  visual:
+    name: Visual regression
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    container:
+      image: mcr.microsoft.com/playwright:v${{ inputs.playwright-version }}-noble
+      options: --ipc=host
+    env:
+      HOME: /root
+      CI: "true"
+      PLAYWRIGHT_JSON_OUTPUT_FILE: reports/visual/results.json
+      PLAYWRIGHT_JSON_OUTPUT_NAME: reports/visual/results.json
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
+      - uses: actions/download-artifact@v8
+        with:
+          name: build-dist
+          path: .
+      - name: Visual regression
+        run: pnpm visual
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: reports-visual
+          path: reports/visual
+          if-no-files-found: warn
+          retention-days: 14
+      # Playwright writes expected/actual/diff triplets here on a mismatch.
+      - name: Upload raw diffs
+        uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: visual-test-results
+          path: test-results
+          if-no-files-found: ignore
+          retention-days: 7

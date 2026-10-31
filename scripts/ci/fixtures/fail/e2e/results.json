@@ -1,0 +1,51 @@
+{
+  "suites": [
+    {
+      "title": "login.spec.ts",
+      "file": "login.spec.ts",
+      "specs": [
+        {
+          "title": "signs in",
+          "ok": false,
+          "tests": [
+            {
+              "projectName": "chromium",
+              "status": "unexpected",
+              "results": [
+                {
+                  "status": "failed",
+                  "duration": 3000,
+                  "error": {
+                    "message": "\u001b[31mError:\u001b[39m expect(locator).toBeVisible() failed\nLocator: getByTestId('dashboard')"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "guards dashboard",
+          "ok": true,
+          "tests": [
+            {
+              "projectName": "chromium",
+              "status": "flaky",
+              "results": [
+                { "status": "failed", "duration": 1000 },
+                { "status": "passed", "duration": 1500 }
+              ]
+            }
+          ]
+        },
+        {
+          "title": "remote outage is isolated",
+          "ok": true,
+          "tests": [
+            { "projectName": "chromium", "status": "skipped", "results": [] }
+          ]
+        }
+      ],
+      "suites": []
+    }
+  ]
+}

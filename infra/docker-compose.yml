@@ -1,0 +1,51 @@
+# Whole system, production-shaped: every app is its own image behind one gateway.
+#   docker compose -f infra/docker-compose.yml up --build
+#   open http://localhost:8080
+name: microfrontends
+
+x-app: &app
+  build:
+    context: ..
+    dockerfile: infra/Dockerfile
+  restart: unless-stopped
+
+services:
+  api:
+    <<: *app
+    build: { context: .., dockerfile: infra/Dockerfile, args: { APP: api } }
+
+  shell:
+    <<: *app
+    build: { context: .., dockerfile: infra/Dockerfile, args: { APP: shell } }
+
+  marketing:
+    <<: *app
+    build:
+      { context: .., dockerfile: infra/Dockerfile, args: { APP: marketing } }
+
+  auth:
+    <<: *app
+    build: { context: .., dockerfile: infra/Dockerfile, args: { APP: auth } }
+
+  dashboard:
+    <<: *app
+    build:
+      { context: .., dockerfile: infra/Dockerfile, args: { APP: dashboard } }
+
+  landing:
+    <<: *app
+    build: { context: .., dockerfile: infra/Dockerfile, args: { APP: landing } }
+
+  gateway:
+    image: nginxinc/nginx-unprivileged:1.27-alpine
+    ports: ["8080:8080"]
+    volumes:
+      - ./nginx/gateway.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      api: { condition: service_healthy }
+      shell: { condition: service_healthy }
+      marketing: { condition: service_healthy }
+      auth: { condition: service_healthy }
+      dashboard: { condition: service_healthy }
+      landing: { condition: service_healthy }
+    restart: unless-stopped

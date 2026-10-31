@@ -1,0 +1,41 @@
+name: docker
+
+# Proves every deployable still builds into an image and that the compose file
+# is valid. Nothing is pushed.
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  image:
+    name: Image · ${{ matrix.app }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        app: [shell, auth, marketing, dashboard, landing, api]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: docker/setup-buildx-action@v4
+      - uses: docker/build-push-action@v7
+        with:
+          context: .
+          file: infra/Dockerfile
+          build-args: |
+            APP=${{ matrix.app }}
+          push: false
+          tags: microfrontends/${{ matrix.app }}:ci
+          cache-from: type=gha,scope=docker-${{ matrix.app }}
+          cache-to: type=gha,scope=docker-${{ matrix.app }},mode=max
+
+  compose:
+    name: Compose config
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v7
+      - name: Validate compose file
+        run: docker compose -f infra/docker-compose.yml config --quiet

@@ -1,0 +1,32 @@
+name: build
+
+# Production build of every app. The dist output is shared with the e2e and
+# visual jobs so they test exactly what was built, once.
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
+      - name: Build
+        run: pnpm build
+      # package.json is uploaded only as a path anchor: upload-artifact roots the
+      # archive at the least common ancestor of all matches, and with the root file
+      # included that is the repository root, so `apps/*/dist` keeps its prefix.
+      - uses: actions/upload-artifact@v7
+        with:
+          name: build-dist
+          path: |
+            package.json
+            apps/*/dist
+            packages/*/dist
+          if-no-files-found: error
+          retention-days: 3

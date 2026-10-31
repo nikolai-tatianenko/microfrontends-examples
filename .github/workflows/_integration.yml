@@ -1,0 +1,30 @@
+name: integration
+
+# Integration tests (API schema over HTTP, host <-> remote contract in jsdom).
+# Writes reports/integration/<module>/junit.xml
+on:
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  integration:
+    name: Integration tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      CI: "true"
+      REPORTS_DIR: ${{ github.workspace }}/reports
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
+      - name: Integration tests
+        run: pnpm test:integration
+      - uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: reports-integration
+          path: reports/integration
+          if-no-files-found: warn
+          retention-days: 14

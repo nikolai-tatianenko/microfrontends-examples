@@ -1,0 +1,37 @@
+name: Setup workspace
+description: >
+  Node (from .nvmrc), pnpm (from the packageManager field via corepack),
+  cached store, frozen install and optional codegen. Checkout is the caller's job.
+
+inputs:
+  codegen:
+    description: Run `pnpm codegen` after install when the script exists (GraphQL types are generated, not committed).
+    required: false
+    default: "true"
+
+runs:
+  using: composite
+  steps:
+    # corepack ships with Node; enable it before setup-node so `cache: pnpm` can find pnpm.
+    - name: Enable corepack
+      shell: bash
+      run: corepack enable
+
+    - uses: actions/setup-node@v7
+      with:
+        node-version-file: .nvmrc
+        cache: pnpm
+
+    # setup-node may have switched Node versions; re-enable for the new install.
+    - name: Enable corepack (selected Node)
+      shell: bash
+      run: corepack enable
+
+    - name: Install dependencies
+      shell: bash
+      run: pnpm install --frozen-lockfile
+
+    - name: Generate code
+      if: inputs.codegen == 'true'
+      shell: bash
+      run: pnpm run --if-present codegen

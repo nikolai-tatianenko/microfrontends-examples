@@ -1,0 +1,71 @@
+name: CI
+
+# Orchestrator only: every concern lives in a reusable workflow (_*.yml).
+#
+#   quality ─┬─ unit ────────┐
+#            ├─ integration ─┤
+#            ├─ docker ──────┼─► report (always)
+#            └─ build ─┬─ e2e ┤
+#                      └─ visual
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  meta:
+    name: Resolve versions
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      playwright: ${{ steps.pw.outputs.version }}
+    steps:
+      - uses: actions/checkout@v7
+      - id: pw
+        run: node scripts/ci/playwright-version.mjs
+
+  quality:
+    uses: ./.github/workflows/_quality.yml
+
+  unit:
+    needs: quality
+    uses: ./.github/workflows/_unit.yml
+
+  integration:
+    needs: quality
+    uses: ./.github/workflows/_integration.yml
+
+  build:
+    needs: quality
+    uses: ./.github/workflows/_build.yml
+
+  docker:
+    needs: quality
+    uses: ./.github/workflows/_docker.yml
+
+  e2e:
+    needs: [build, meta]
+    uses: ./.github/workflows/_e2e.yml
+    with:
+      playwright-version: ${{ needs.meta.outputs.playwright }}
+
+  visual:
+    needs: [build, meta]
+    uses: ./.github/workflows/_visual.yml
+    with:
+      playwright-version: ${{ needs.meta.outputs.playwright }}
+
+  report:
+    needs: [quality, unit, integration, build, docker, e2e, visual]
+    if: always()
+    permissions:
+      contents: read
+      pull-requests: write
+    uses: ./.github/workflows/_report.yml

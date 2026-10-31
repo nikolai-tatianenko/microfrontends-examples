@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites tests="2" failures="0" time="0.3">
+  <testsuite name="posts query" tests="2" failures="0" time="0.3">
+    <testcase classname="posts" name="lists posts" time="0.1"/>
+    <testcase classname="posts" name="paginates" time="0.2"/>
+  </testsuite>
+</testsuites>

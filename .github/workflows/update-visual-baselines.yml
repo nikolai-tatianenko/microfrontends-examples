@@ -1,0 +1,132 @@
+name: Update visual baselines
+
+# Regenerates Playwright screenshot baselines inside the same Linux container CI
+# uses, then commits them to the branch. Triggers:
+#   - Actions tab -> "Update visual baselines" -> Run workflow (pick the branch)
+#   - a maintainer comments `/update-snapshots` on a PR from this repository
+on:
+  workflow_dispatch:
+  issue_comment:
+    types: [created]
+
+concurrency:
+  group: update-snapshots-${{ github.event.issue.number || github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  resolve:
+    name: Resolve target branch
+    # Comment text is only compared here (expression), never expanded into a shell.
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.issue.pull_request &&
+       startsWith(github.event.comment.body, '/update-snapshots') &&
+       contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association))
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      ok: ${{ steps.target.outputs.ok }}
+      ref: ${{ steps.target.outputs.ref }}
+      playwright: ${{ steps.pw.outputs.version }}
+    steps:
+      - id: target
+        env:
+          GH_TOKEN: ${{ github.token }}
+          EVENT_NAME: ${{ github.event_name }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.issue.number }}
+          DISPATCH_REF: ${{ github.ref_name }}
+        run: |
+          if [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            ref="$DISPATCH_REF"
+            head_repo="$REPO"
+          else
+            ref="$(gh pr view "$PR" --repo "$REPO" --json headRefName --jq .headRefName)"
+            head_repo="$(gh pr view "$PR" --repo "$REPO" --json headRepository,headRepositoryOwner --jq '.headRepositoryOwner.login + "/" + .headRepository.name')"
+          fi
+          ok=true
+          if [ "$head_repo" != "$REPO" ]; then
+            echo "::error::Refusing to push to a fork ($head_repo)."
+            ok=false
+          fi
+          if [ "$ref" = "main" ]; then
+            echo "::error::Refusing to push baselines straight to main; use a branch."
+            ok=false
+          fi
+          echo "ok=$ok" >> "$GITHUB_OUTPUT"
+          echo "ref=$ref" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v7
+        if: steps.target.outputs.ok == 'true'
+        with:
+          ref: ${{ steps.target.outputs.ref }}
+      - id: pw
+        if: steps.target.outputs.ok == 'true'
+        run: node scripts/ci/playwright-version.mjs
+
+  update:
+    name: Regenerate and commit
+    needs: resolve
+    if: needs.resolve.outputs.ok == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    permissions:
+      contents: write
+    container:
+      image: mcr.microsoft.com/playwright:v${{ needs.resolve.outputs.playwright }}-noble
+      options: --ipc=host
+    env:
+      HOME: /root
+      CI: "true"
+      TARGET_REF: ${{ needs.resolve.outputs.ref }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ needs.resolve.outputs.ref }}
+      - uses: ./.github/actions/setup
+      - name: Build
+        run: pnpm build
+      - name: Regenerate baselines
+        run: pnpm visual:update
+      - name: Commit and push
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A -- ':(glob)**/*-snapshots/**' ':(glob)**/__screenshots__/**'
+          if git diff --cached --quiet; then
+            echo "Baselines already up to date, nothing to commit."
+            exit 0
+          fi
+          git commit -m "test(visual): update Playwright baselines"
+          git push origin "HEAD:refs/heads/${TARGET_REF}"
+          echo "::notice::Baselines pushed. Pushes made with GITHUB_TOKEN do not start CI; push any commit (or re-run CI) to verify."
+
+  notify:
+    name: Comment on PR
+    needs: [resolve, update]
+    if: always() && github.event_name == 'issue_comment' && needs.resolve.result == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      pull-requests: write
+    steps:
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.issue.number }}
+          RESULT: ${{ needs.update.result }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          if [ "$RESULT" = "success" ]; then
+            body="📸 Visual baselines regenerated and pushed (if anything changed). Push a commit or re-run CI to verify. [Run]($RUN_URL)"
+          else
+            body="❌ Updating visual baselines finished with **$RESULT**. [Run]($RUN_URL)"
+          fi
+          gh pr comment "$PR" --repo "$REPO" --body "$body"

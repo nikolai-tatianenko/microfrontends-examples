@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="jest tests" tests="2" failures="0" time="1.0">
+  <testsuite name="RemoteHost" tests="2" failures="0" time="1.0">
+    <testcase classname="RemoteHost" name="mounts the remote" time="0.4"/>
+    <testcase classname="RemoteHost" name="unmounts on cleanup" time="0.6"/>
+  </testsuite>
+</testsuites>
