@@ -44,8 +44,12 @@ const REACT_SINGLETONS = [
  */
 const VITE_REMOTES = new Set(["landing"]);
 
-/** Dev origins that may load remotes: the shell and the vanilla container. */
-const HOST_ORIGIN = /^http:\/\/(localhost|127\.0\.0\.1):(8080|8090)$/;
+/**
+ * Dev origins that may load remotes: the shell and the vanilla container, by port, or either behind
+ * `pnpm dev:portless` (https://mfe.localhost). Keep in sync with apps/landing/vite.config.ts.
+ */
+const HOST_ORIGIN =
+  /^(http:\/\/(localhost|127\.0\.0\.1):(8080|8090)|https?:\/\/([a-z0-9-]+\.)*mfe\.localhost(:\d+)?)$/;
 
 const remoteUrl = (name, isProd) => {
   const file = VITE_REMOTES.has(name) ? "mf-manifest.json" : "remoteEntry.js";
@@ -209,4 +213,4 @@ function createConfig({
   };
 }
 
-module.exports = { createConfig, PORTS, REMOTE_PREFIX };
+module.exports = { createConfig, PORTS, REMOTE_PREFIX, HOST_ORIGIN };

@@ -11,6 +11,8 @@
   },
   "scripts": {
     "dev": "turbo run dev --filter=!@vanilla/* --concurrency=12",
+    "dev:portless": "node scripts/portless.mjs dev",
+    "ui:portless": "node scripts/portless.mjs ui",
     "codegen": "graphql-codegen --config codegen.ts",
     "build": "turbo run build",
     "typecheck": "turbo run typecheck",
@@ -23,7 +25,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "storybook": "pnpm --filter @blog/ui storybook",
-    "test:ci-scripts": "node --test \"scripts/ci/*.test.mjs\"",
+    "test:ci-scripts": "node --test \"scripts/*.test.mjs\" \"scripts/ci/*.test.mjs\"",
     "visual:docker": "node scripts/visual-docker.mjs",
     "coverage:check": "node scripts/coverage-gate.mjs",
     "test:all": "turbo run test test:integration",

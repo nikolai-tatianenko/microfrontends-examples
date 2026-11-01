@@ -41,7 +41,10 @@ export default defineConfig(({ command }) => ({
     port: PORT,
     strictPort: true,
     // Only the hosts that load this remote may read it; `cors: true` would let any website read the sources.
-    cors: { origin: /^http:\/\/(localhost|127\.0\.0\.1):(8080|8090)$/ },
+    cors: {
+      origin:
+        /^(http:\/\/(localhost|127\.0\.0\.1):(8080|8090)|https?:\/\/([a-z0-9-]+\.)*mfe\.localhost(:\d+)?)$/,
+    },
     proxy: { "/graphql": "http://localhost:4000" },
   },
   build: { target: "es2022", outDir: "dist" },

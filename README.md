@@ -84,6 +84,18 @@ new email. Every region of the page is outlined and named after the app that ren
 `auth`, `dashboard`); the "Show micro-apps" switch in the header hides the labels. A first visit opens a five-step
 guided tour across three micro-apps ([ADR 0011](docs/adr/0011-guided-tour-in-the-shell.md)); "Take the tour" replays it.
 
+Prefer names to port numbers? With [portless](https://github.com/vercel-labs/portless) installed globally
+(`npm i -g portless`, **Node 24+**; the repo itself stays on Node 22):
+
+```bash
+pnpm dev:portless     # https://mfe.localhost, plus marketing.mfe.localhost … api.mfe.localhost
+pnpm ui:portless      # Storybook at https://ui.mfe.localhost
+```
+
+The apps keep their fixed ports, because the remote URLs are built from them; portless adds names in front as aliases
+and removes them when you stop. The first run asks for sudo once (it binds port 443 and trusts a local CA). The
+remotes' dev servers already allow `*.mfe.localhost` as a host origin.
+
 Production-shaped, every app its own image behind nginx:
 
 ```bash
@@ -117,6 +129,7 @@ docs/               architecture (Mermaid), ADRs, CI guide
 | Command                                              | What it does                                                        |
 | ---------------------------------------------------- | ------------------------------------------------------------------- |
 | `pnpm dev`                                           | all dev servers (HMR); remotes also run standalone                  |
+| `pnpm dev:portless` · `pnpm ui:portless`             | the same, behind named `.localhost` URLs (needs portless, Node 24+) |
 | `pnpm test` / `pnpm test:integration`                | unit / integration tests, JUnit + coverage to `reports/`            |
 | `pnpm build && pnpm e2e`                             | production build, then Playwright against it                        |
 | `pnpm visual` · `pnpm visual:update`                 | visual regression · regenerate baselines **in the Linux container** |
