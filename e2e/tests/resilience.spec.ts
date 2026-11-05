@@ -1,4 +1,4 @@
-import { expect, test } from "../fixtures";
+import { expect, signIn, test } from "../fixtures";
 
 // A dead remote logs failed requests / chunk errors on purpose.
 test.use({
@@ -68,5 +68,27 @@ test.describe("failure isolation", () => {
     down = false;
     await page.getByTestId("error-state-retry").click();
     await expect(page.getByTestId("blog-post-item")).toHaveCount(6);
+  });
+
+  test("a GraphQL outage on the Vue dashboard shows its own error with retry", async ({
+    page,
+  }) => {
+    await signIn(page);
+    let down = true;
+    await page.route("**/graphql", (route) =>
+      down ? route.fulfill({ status: 500, body: "boom" }) : route.continue(),
+    );
+
+    await page.reload();
+    await expect(page.getByTestId("dashboard-error")).toBeVisible();
+    // The shell around the remote is unaffected.
+    await expect(page.getByTestId("header")).toBeVisible();
+
+    down = false;
+    await page.getByTestId("dashboard-retry").click();
+    await expect(page.getByTestId("dashboard-error")).toHaveCount(0);
+    await expect(page.getByTestId("dashboard")).toContainText(
+      "Recent activity",
+    );
   });
 });

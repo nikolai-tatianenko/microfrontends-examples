@@ -9,7 +9,7 @@ All numbers below were measured on this machine
 | ------------- | ---------------------------------------------------- | ----------------------------------------------------------: | --------------------------------------------------------------------------------- |
 | Unit          | `pnpm test` (Jest, per module)                       |                                                          92 | not re-measured after adding `landing` and the tour (was 8.1 s across 10 modules) |
 | Integration   | `pnpm test:integration`                              |                                                          24 | not re-measured (was 4.6 s summed across 5 modules)                               |
-| E2E           | `pnpm e2e` (Playwright, production build, 4 workers) |                             45 (25 journeys + 20 axe scans) | 16.6 s on the latest run, 39 s to 66 s on earlier ones (4 workers)                |
+| E2E           | `pnpm e2e` (Playwright, production build, 4 workers) |                             49 (29 journeys + 20 axe scans) | 19.8 s on the latest run, 39 s to 66 s on earlier ones (4 workers)                |
 | Visual + a11y | `pnpm visual:docker` (Playwright Linux image)        | 46 (12 pages, 34 stories; each story also gets an axe scan) | about 1.3 min inside the container                                                |
 | Scripts       | `pnpm test:ci-scripts` (node:test)                   |                                                          22 | under 1 s                                                                         |
 

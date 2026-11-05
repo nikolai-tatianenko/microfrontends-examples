@@ -33,6 +33,25 @@ test.describe("marketing remote", () => {
     await expect(page.getByTestId("signup-form")).toBeVisible();
   });
 
+  test("the landing page shows its hero and pillars, and its other calls to action lead on", async ({
+    page,
+  }) => {
+    await page.goto("/");
+    await expect(page.getByTestId("landing-hero")).toBeVisible();
+    await expect(
+      page.getByTestId("landing-pillars").getByRole("listitem"),
+    ).toHaveCount(3);
+
+    await page.getByTestId("landing-cta-pricing").click();
+    await expect(page).toHaveURL("/pricing");
+    await expect(page.getByTestId("pricing-grid")).toBeVisible();
+
+    await page.goto("/");
+    await page.getByTestId("landing-cta-signin").click();
+    await expect(page).toHaveURL("/auth/signin");
+    await expect(page.getByTestId("signin-form")).toBeVisible();
+  });
+
   test("the top menu reaches every section and marks the current page", async ({
     page,
   }) => {
@@ -155,6 +174,19 @@ test.describe("marketing remote", () => {
     await expect(
       page.getByRole("heading", { name: "Page not found" }),
     ).toBeVisible();
+  });
+
+  test("the not-found page leads back home", async ({ page }) => {
+    await page.goto("/definitely-not-a-page");
+    await page.getByTestId("not-found-home").click();
+    await expect(page).toHaveURL("/");
+    await expect(page.getByTestId("landing")).toBeVisible();
+  });
+
+  test("every pricing plan is listed", async ({ page }) => {
+    await page.goto("/pricing");
+    for (const plan of ["free", "pro", "team"])
+      await expect(page.getByTestId(`plan-${plan}`)).toBeVisible();
   });
 
   test("footer links navigate within the marketing remote", async ({
