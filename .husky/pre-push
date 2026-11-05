@@ -1,0 +1,6 @@
+# Same gates CI runs before the slow ones: unit, integration, then the built app end to end.
+# A dev server on :8080 or :4000 would be reused by Playwright; stop it first.
+pnpm test:all
+pnpm coverage:check
+pnpm build
+pnpm e2e

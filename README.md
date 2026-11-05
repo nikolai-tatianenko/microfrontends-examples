@@ -122,6 +122,23 @@ docs/               architecture (Mermaid), ADRs, CI guide
 | `pnpm visual` · `pnpm visual:update`                 | visual regression · regenerate baselines **in the Linux container** |
 | `pnpm storybook`                                     | design system, 34 stories (light/dark toolbar, a11y panel)          |
 | `pnpm lint` · `pnpm typecheck` · `pnpm format:check` | static gates                                                        |
+| `pnpm commit`                                        | Commitizen prompt that writes a Conventional Commit                 |
+
+## Git hooks
+
+`pnpm install` wires [Husky](https://typicode.github.io/husky/) (the `prepare` script), so the checks run before the code leaves your machine:
+
+| Hook         | Runs                                                                                                    |
+| ------------ | ------------------------------------------------------------------------------------------------------- |
+| `pre-commit` | lint-staged (ESLint and Prettier on the staged files), then `pnpm typecheck`                            |
+| `commit-msg` | commitlint: [Conventional Commits](https://www.conventionalcommits.org), English only, no tool trailers |
+| `pre-push`   | `pnpm test:all` (unit and integration), `pnpm coverage:check`, `pnpm build`, `pnpm e2e`                 |
+
+Write messages with `pnpm commit` (Commitizen) or by hand in the same format, for example `fix(shell): retry a failed remote`.
+Stop any dev server on :8080 or :4000 before pushing, because Playwright would reuse it instead of the production build.
+CI repeats all of this, and also lints every commit of a pull request. `scripts/hooks.test.mjs` checks that the hooks
+exist, call these gates, and that the commit rules accept and refuse what they should. `git push --no-verify` skips the
+hooks locally; CI does not.
 
 ## Quality gates
 

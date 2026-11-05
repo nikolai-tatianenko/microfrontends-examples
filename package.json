@@ -26,10 +26,15 @@
     "test:ci-scripts": "node --test \"scripts/ci/*.test.mjs\"",
     "visual:docker": "node scripts/visual-docker.mjs",
     "coverage:check": "node scripts/coverage-gate.mjs",
-    "test:all": "turbo run test test:integration"
+    "test:all": "turbo run test test:integration",
+    "prepare": "husky",
+    "commit": "cz",
+    "commitlint": "commitlint"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.14.0",
+    "@commitlint/cli": "^21.2.4",
+    "@commitlint/config-conventional": "^21.2.4",
     "@eslint/js": "^9.35.0",
     "@graphql-codegen/cli": "^5.0.7",
     "@graphql-codegen/client-preset": "^4.8.3",
@@ -44,19 +49,35 @@
     "@types/node": "^22.18.0",
     "@types/react": "^19.1.0",
     "@types/react-dom": "^19.1.0",
+    "commitizen": "^4.3.2",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9.35.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-vue": "^10.4.0",
     "globals": "^16.3.0",
+    "husky": "^9.1.7",
     "istanbul-lib-coverage": "^3.2.2",
     "jest": "^30.1.0",
     "jest-environment-jsdom": "^30.1.0",
     "jest-junit": "^16.0.0",
+    "lint-staged": "^17.6.0",
     "prettier": "3.6.2",
     "turbo": "2.5.8",
     "typescript": "5.9.3",
     "typescript-eslint": "^8.43.0",
     "vue-tsc": "^3.0.6"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,mjs,cjs,vue}": [
+      "eslint --fix --no-warn-ignored",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml,css,html}": "prettier --write"
   }
 }
