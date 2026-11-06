@@ -3,6 +3,7 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 import { resolve } from "node:path";
 import { defineConfig, type Plugin } from "vite";
+import { HOST_ORIGIN, restrictCors } from "./src/devCors";
 
 const PORT = 8084;
 
@@ -41,14 +42,13 @@ export default defineConfig(({ command }) => ({
     port: PORT,
     strictPort: true,
     // Only the hosts that load this remote may read it; `cors: true` would let any website read the sources.
-    cors: {
-      origin:
-        /^(http:\/\/(localhost|127\.0\.0\.1):(8080|8090)|https?:\/\/([a-z0-9-]+\.)*mfe\.localhost(:\d+)?)$/,
-    },
+    // The federation plugin sets its own wildcard header on top of this, which `restrictCors` takes back.
+    cors: { origin: HOST_ORIGIN },
     proxy: { "/graphql": "http://localhost:4000" },
   },
   build: { target: "es2022", outDir: "dist" },
   plugins: [
+    restrictCors(),
     reactPreamble(),
     react(),
     tailwindcss(),

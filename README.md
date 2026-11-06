@@ -93,8 +93,15 @@ pnpm ui:portless      # Storybook at https://ui.mfe.localhost
 ```
 
 The apps keep their fixed ports, because the remote URLs are built from them; portless adds names in front as aliases
-and removes them when you stop. The first run asks for sudo once (it binds port 443 and trusts a local CA). The
-remotes' dev servers already allow `*.mfe.localhost` as a host origin.
+and removes them when you stop. HTTPS on `mfe.localhost` binds port 443, so the first run asks for sudo once (and trusts
+a local CA). Without sudo, use plain HTTP on a free port:
+
+```bash
+PORTLESS_HTTPS=0 PORTLESS_PORT=1355 pnpm dev:portless    # http://mfe.localhost:1355
+```
+
+Run it with Node 24 (`nvm use 24`) and stop other dev servers on :8080/:4000 first. The remotes' dev servers accept
+`*.mfe.localhost` as a host origin and nothing else.
 
 Production-shaped, every app its own image behind nginx:
 

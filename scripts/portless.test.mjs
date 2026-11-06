@@ -1,5 +1,8 @@
 import assert from "node:assert/strict";
+import { createRequire } from "node:module";
 import { test } from "node:test";
+
+const require_ = createRequire(import.meta.url);
 import { routesFor } from "./portless.mjs";
 
 const ports = {
@@ -43,4 +46,22 @@ test("the remotes' CORS rule admits the portless host and still refuses other si
     "http://localhost:9999",
   ])
     assert.ok(!HOST_ORIGIN.test(origin), origin);
+});
+
+test("the landing dev server uses the same allow-list as the Rspack remotes", async () => {
+  const { createRequire } = await import("node:module");
+  const { HOST_ORIGIN } = createRequire(import.meta.url)(
+    "../packages/build-config/index.cjs",
+  );
+  const landing = await import("../apps/landing/src/devCors.ts");
+  assert.equal(landing.HOST_ORIGIN.source, HOST_ORIGIN.source);
+});
+
+test("the Rspack dev servers accept the portless host names", () => {
+  const { createConfig } = require_("../packages/build-config/index.cjs");
+  const config = createConfig({
+    name: "marketing",
+    dir: new URL("../apps/marketing", import.meta.url).pathname,
+  })({}, { mode: "development" });
+  assert.ok(config.devServer.allowedHosts.includes(".localhost"));
 });

@@ -198,6 +198,9 @@ function createConfig({
       devServer: {
         port,
         hot: true,
+        // The dev server refuses a request whose Host or Origin it does not know; `*.localhost` is how
+        // `pnpm dev:portless` names the apps, and it can only ever resolve to this machine.
+        allowedHosts: [".localhost"],
         historyApiFallback: isShell,
         // Only the hosts that load a remote may read it; "*" would let any website read the dev sources.
         headers: (req) =>
