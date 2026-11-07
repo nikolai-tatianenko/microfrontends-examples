@@ -13,9 +13,12 @@ runs:
   using: composite
   steps:
     # corepack ships with Node; enable it before setup-node so `cache: pnpm` can find pnpm.
+    # The Playwright image's tag is re-published and a newer build no longer bundles corepack.
     - name: Enable corepack
       shell: bash
-      run: corepack enable
+      run: |
+        command -v corepack >/dev/null || npm install --global corepack
+        corepack enable
 
     - uses: actions/setup-node@v7
       with:
