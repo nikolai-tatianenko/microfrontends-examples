@@ -14,10 +14,11 @@ runs:
   steps:
     # corepack ships with Node; enable it before setup-node so `cache: pnpm` can find pnpm.
     # The Playwright image's tag is re-published and a newer build no longer bundles corepack.
+    # It does ship its own /usr/bin/yarn, which corepack has to replace, hence --force.
     - name: Enable corepack
       shell: bash
       run: |
-        command -v corepack >/dev/null || npm install --global corepack
+        command -v corepack >/dev/null || npm install --global --force corepack
         corepack enable
 
     - uses: actions/setup-node@v7
