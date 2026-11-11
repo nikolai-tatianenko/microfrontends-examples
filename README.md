@@ -14,6 +14,20 @@ in the pull request.
   <img src="e2e/visual/__screenshots__/pages.spec.ts/dashboard-light.png" alt="Vue dashboard remote rendered inside the React shell" width="720">
 </p>
 
+## Benefits
+
+What this setup gives a team, and where in the repo you can check each claim:
+
+| Benefit                                     | How it is delivered                                                                                              | Check it                                                                                                                     |
+| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| **Teams release independently**             | One image per app behind a gateway; CI builds and tests each app on its own.                                     | [`infra/`](infra), [ADR 0003](docs/adr/0003-same-origin-remote-prefix.md)                                                    |
+| **A broken remote does not break the page** | Every remote sits in an error boundary with a retry; the shell and the other remotes keep working.               | [`e2e/tests/resilience.spec.ts`](e2e/tests/resilience.spec.ts)                                                               |
+| **One integration surface, fully typed**    | A single `mount(el, { services })` function is the whole contract between the shell and a remote.                | [`packages/contract`](packages/contract/src), [ADR 0001](docs/adr/0001-host-injects-services.md)                             |
+| **Frameworks and bundlers can differ**      | React, Vue 3, Rspack and Vite remotes load through the same contract and share one React instance.               | [`apps/dashboard`](apps/dashboard), [`apps/landing`](apps/landing)                                                           |
+| **Changes are safe to ship**                | Unit, integration, end-to-end and visual tests, an accessibility scan (WCAG 2.1 AA) and a per-file coverage bar. | [measured test review](docs/test-review.md), [ADR 0005](docs/adr/0005-testing-strategy.md)                                   |
+| **Reviews show the evidence**               | CI writes its results into the pull request description; hooks enforce Conventional Commits before a push.       | [`docs/ci.md`](docs/ci.md), [Git hooks](#git-hooks)                                                                          |
+| **The costs are written down, not hidden**  | Decision records and a list of known limits say what was traded away and when not to use this.                   | [Do you need microfrontends?](docs/why-microfrontends.md), [Known limits](#known-limits-deliberate-and-what-i-would-do-next) |
+
 ## What to look at first
 
 | If you care about…    | Start here                                                                                                                                                   |
