@@ -77,6 +77,10 @@ test.describe("guided tour", () => {
       await page.emulateMedia({ colorScheme });
       await page.goto("/");
       await expect(tooltip(page)).toContainText("One shell, many apps");
+      // The overlay fades in; while it does, axe reads a half-blended colour and reports a contrast failure that is gone 200 ms later.
+      await page.waitForFunction(
+        () => !document.getAnimations().some((a) => a instanceof CSSTransition),
+      );
       await expectNoA11yViolations(page);
     });
   }
