@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "description": "Runtime-composed microfrontends: React 19 shell, React + Vue 3 remotes, typed mount contract, shared design system.",
-  "license": "ISC",
+  "license": "MIT",
   "author": "Nikolai Tatianenko",
   "packageManager": "pnpm@10.28.1",
   "engines": {

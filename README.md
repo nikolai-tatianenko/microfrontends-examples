@@ -197,3 +197,7 @@ replaced on each push. Details and diagrams: [docs/ci.md](docs/ci.md).
 - **The Vue component has no Jest unit test**; its logic is in tested plain TS and the component is covered by
   E2E and visual tests ([ADR 0005](docs/adr/0005-testing-strategy.md)).
 - **Bundler:** Rspack builds the shell and three remotes through one config factory; the landing remote is built with Vite and loaded through the same contract ([ADR 0009](docs/adr/0009-rspack.md)).
+
+## License
+
+[MIT](LICENSE)
