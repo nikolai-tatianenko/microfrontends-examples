@@ -19,17 +19,27 @@ async function analyze(build: () => AxeBuilder) {
 }
 
 /**
- * Fails on any WCAG 2.0/2.1 A or AA violation. Each failure names the rule, its impact and the first
+ * Fails on any WCAG 2.0/2.1/2.2 A, AA or AAA violation (7:1 contrast included)
+ * and on axe's best-practice rules. Each failure names the rule, its impact and the first
  * offending element, so the fix is obvious from the test output.
  */
-export async function expectNoA11yViolations(page: Page, scope?: string) {
+export async function expectNoA11yViolations(
+  page: Page,
+  scope?: string,
+  /** Rules to leave out, each with a reason at the call site. Nothing is skipped by default. */
+  skip: string[] = [],
+) {
   const { violations } = await analyze(() => {
     const builder = new AxeBuilder({ page }).withTags([
       "wcag2a",
       "wcag2aa",
       "wcag21a",
       "wcag21aa",
+      "wcag22aa",
+      "wcag2aaa",
+      "best-practice",
     ]);
+    builder.disableRules(skip);
     return scope ? builder.include(scope) : builder;
   });
   const summary = violations.map(

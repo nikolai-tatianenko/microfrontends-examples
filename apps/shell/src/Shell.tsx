@@ -1,5 +1,5 @@
 import type { Services } from "@blog/contract";
-import { Header, useT } from "@blog/ui";
+import { CONTENT_ID, Header, SkipLink, useT } from "@blog/ui";
 import { Box, Button, FormControlLabel, Switch } from "@mui/material";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import {
@@ -63,6 +63,7 @@ export function Shell({
 
   return (
     <>
+      <SkipLink targetId={CONTENT_ID} />
       {/* Sticky here, not in Header: the owner frame is Header's parent and a sticky box cannot leave its parent. */}
       <Box sx={{ position: "sticky", top: 0, zIndex: "appBar" }}>
         <OwnerFrame owner="shell" visible={showOwners}>
@@ -97,63 +98,66 @@ export function Shell({
           />
         </OwnerFrame>
       </Box>
-      <Routes>
-        <Route
-          path="/auth/*"
-          element={
-            <RemoteRoute
-              key="auth"
-              name="auth"
-              load={remotes.auth}
-              services={services}
-              showOwner={showOwners}
-            />
-          }
-        />
-        <Route
-          path="/dashboard/*"
-          element={
-            user ? (
+      {/* Not a landmark: each remote renders its own <main>. This is only the skip link's target. */}
+      <Box id={CONTENT_ID} tabIndex={-1} sx={{ outline: "none" }}>
+        <Routes>
+          <Route
+            path="/auth/*"
+            element={
               <RemoteRoute
-                key="dashboard"
-                name="dashboard"
-                load={remotes.dashboard}
+                key="auth"
+                name="auth"
+                load={remotes.auth}
                 services={services}
                 showOwner={showOwners}
               />
-            ) : (
-              <Navigate
-                to={endedSession.current ? "/" : "/auth/signin"}
-                replace
+            }
+          />
+          <Route
+            path="/dashboard/*"
+            element={
+              user ? (
+                <RemoteRoute
+                  key="dashboard"
+                  name="dashboard"
+                  load={remotes.dashboard}
+                  services={services}
+                  showOwner={showOwners}
+                />
+              ) : (
+                <Navigate
+                  to={endedSession.current ? "/" : "/auth/signin"}
+                  replace
+                />
+              )
+            }
+          />
+          <Route
+            path="/"
+            element={
+              <RemoteRoute
+                key="landing"
+                name="landing"
+                load={remotes.landing}
+                services={services}
+                showOwner={showOwners}
               />
-            )
-          }
-        />
-        <Route
-          path="/"
-          element={
-            <RemoteRoute
-              key="landing"
-              name="landing"
-              load={remotes.landing}
-              services={services}
-              showOwner={showOwners}
-            />
-          }
-        />
-        <Route
-          path="*"
-          element={
-            <RemoteRoute
-              key="marketing"
-              name="marketing"
-              load={remotes.marketing}
-              services={services}
-              showOwner={showOwners}
-            />
-          }
-        />
-      </Routes>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <RemoteRoute
+                key="marketing"
+                name="marketing"
+                load={remotes.marketing}
+                services={services}
+                showOwner={showOwners}
+              />
+            }
+          />
+        </Routes>
+      </Box>
       {tourRun !== null && (
         <GuidedTour key={tourRun} onEnd={() => setTourRun(null)} />
       )}

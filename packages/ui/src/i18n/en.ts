@@ -1,5 +1,6 @@
 export const en = {
   "app.name": "Blog",
+  "a11y.skip": "Skip to main content",
   "nav.login": "Login",
   "nav.logout": "Logout",
   "nav.primary": "Primary",

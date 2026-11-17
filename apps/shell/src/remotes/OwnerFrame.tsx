@@ -20,6 +20,8 @@ export function OwnerFrame({ owner, visible, children }: OwnerFrameProps) {
     >
       <Box
         component="span"
+        // A label for people watching the demo. Screen readers get the same structure from the landmarks.
+        aria-hidden="true"
         data-test-id={`owner-tag-${owner}`}
         sx={{
           display: "inline-block",

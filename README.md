@@ -18,15 +18,16 @@ in the pull request.
 
 What this setup gives a team, and where in the repo you can check each claim:
 
-| Benefit                                     | How it is delivered                                                                                              | Check it                                                                                                                     |
-| ------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| **Teams release independently**             | One image per app behind a gateway; CI builds and tests each app on its own.                                     | [`infra/`](infra), [ADR 0003](docs/adr/0003-same-origin-remote-prefix.md)                                                    |
-| **A broken remote does not break the page** | Every remote sits in an error boundary with a retry; the shell and the other remotes keep working.               | [`e2e/tests/resilience.spec.ts`](e2e/tests/resilience.spec.ts)                                                               |
-| **One integration surface, fully typed**    | A single `mount(el, { services })` function is the whole contract between the shell and a remote.                | [`packages/contract`](packages/contract/src), [ADR 0001](docs/adr/0001-host-injects-services.md)                             |
-| **Frameworks and bundlers can differ**      | React, Vue 3, Rspack and Vite remotes load through the same contract and share one React instance.               | [`apps/dashboard`](apps/dashboard), [`apps/landing`](apps/landing)                                                           |
-| **Changes are safe to ship**                | Unit, integration, end-to-end and visual tests, an accessibility scan (WCAG 2.1 AA) and a per-file coverage bar. | [measured test review](docs/test-review.md), [ADR 0005](docs/adr/0005-testing-strategy.md)                                   |
-| **Reviews show the evidence**               | CI writes its results into the pull request description; hooks enforce Conventional Commits before a push.       | [`docs/ci.md`](docs/ci.md), [Git hooks](#git-hooks)                                                                          |
-| **The costs are written down, not hidden**  | Decision records and a list of known limits say what was traded away and when not to use this.                   | [Do you need microfrontends?](docs/why-microfrontends.md), [Known limits](#known-limits-deliberate-and-what-i-would-do-next) |
+| Benefit                                     | How it is delivered                                                                                               | Check it                                                                                                                     |
+| ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
+| **Teams release independently**             | One image per app behind a gateway; CI builds and tests each app on its own.                                      | [`infra/`](infra), [ADR 0003](docs/adr/0003-same-origin-remote-prefix.md)                                                    |
+| **A broken remote does not break the page** | Every remote sits in an error boundary with a retry; the shell and the other remotes keep working.                | [`e2e/tests/resilience.spec.ts`](e2e/tests/resilience.spec.ts)                                                               |
+| **One integration surface, fully typed**    | A single `mount(el, { services })` function is the whole contract between the shell and a remote.                 | [`packages/contract`](packages/contract/src), [ADR 0001](docs/adr/0001-host-injects-services.md)                             |
+| **Frameworks and bundlers can differ**      | React, Vue 3, Rspack and Vite remotes load through the same contract and share one React instance.                | [`apps/dashboard`](apps/dashboard), [`apps/landing`](apps/landing)                                                           |
+| **Changes are safe to ship**                | Unit, integration, end-to-end and visual tests, an accessibility scan (WCAG 2.2 AAA) and a per-file coverage bar. | [measured test review](docs/test-review.md), [ADR 0005](docs/adr/0005-testing-strategy.md)                                   |
+| **Accessible to WCAG 2.2 AAA**              | 7:1 contrast, 44px targets, a skip link, a visible focus ring and reduced motion, in light and dark.              | [`docs/accessibility.md`](docs/accessibility.md), [`e2e/tests/a11y-aaa.spec.ts`](e2e/tests/a11y-aaa.spec.ts)                 |
+| **Reviews show the evidence**               | CI writes its results into the pull request description; hooks enforce Conventional Commits before a push.        | [`docs/ci.md`](docs/ci.md), [Git hooks](#git-hooks)                                                                          |
+| **The costs are written down, not hidden**  | Decision records and a list of known limits say what was traded away and when not to use this.                    | [Do you need microfrontends?](docs/why-microfrontends.md), [Known limits](#known-limits-deliberate-and-what-i-would-do-next) |
 
 ## What to look at first
 
@@ -180,7 +181,7 @@ hooks locally; CI does not.
 Every pull request runs the same gates you can run locally, and the results are written into the PR description:
 
 🧪 unit tests per module with coverage · 🔗 integration tests against the real GraphQL schema ·
-🎭 end-to-end tests on the production build · ♿ automated accessibility scans (axe, WCAG 2.1 AA, light and dark) · 👁️ visual regression · 🐳 image builds and compose validation.
+🎭 end-to-end tests on the production build · ♿ automated accessibility checks (axe at WCAG 2.2 AAA, target size, skip link, focus ring and reduced motion, light and dark; [what is and is not covered](docs/accessibility.md)) · 👁️ visual regression · 🐳 image builds and compose validation.
 
 Static checks run before any test: strict `typescript-eslint` (with `jsx-a11y`, React hooks and Vue rules), TypeScript with
 `strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes` and unused-code flags, [knip](https://knip.dev) for unused

@@ -30,12 +30,13 @@ All numbers below were measured on this machine
 
 ## Accessibility
 
-- axe-core (WCAG 2.0/2.1 A and AA) runs on 8 screens in light and dark (`e2e/tests/a11y.spec.ts`, 16 scans; 2 more in `tour.spec.ts` with the guided tour open) and on every
+- axe-core (WCAG 2.0/2.1/2.2 A, AA and AAA, plus best-practice rules; see [accessibility.md](accessibility.md)) runs on 8 screens in light and dark (`e2e/tests/a11y.spec.ts`, 16 scans; 2 more in `tour.spec.ts` with the guided tour open) and on every
   Storybook story (`e2e/visual/storybook.spec.ts`). Any violation fails the run with the rule, impact and first element.
 - It found one real defect: the not-found page's link used the browser's default blue, failing contrast on the dark theme.
   Fixed by using the themed MUI link.
 - Negative control: the helper was run on a deliberately bad page and reported `image-alt`, `button-name` and `color-contrast`,
   so a clean result means axe looked and found nothing.
+- `e2e/tests/a11y-aaa.spec.ts` adds what axe cannot see: 44px targets, the skip link, the focus ring and reduced motion.
 - Limit: automation finds only the machine-checkable part of accessibility. Keyboard order, focus management and screen-reader
   wording still need a person.
 

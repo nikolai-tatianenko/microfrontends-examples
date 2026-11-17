@@ -69,9 +69,9 @@ onMounted(refresh);
 .dashboard {
   --d-surface: #fff;
   --d-border: #e0e0e0;
-  --d-muted: #5f6368;
-  --d-good: #1b7f3b;
-  --d-bad: #c62828;
+  --d-muted: #4a4f54;
+  --d-good: #14612c;
+  --d-bad: #a31515;
   max-width: 900px;
   margin: 0 auto;
   padding: 32px 16px;
@@ -86,9 +86,9 @@ onMounted(refresh);
   .dashboard {
     --d-surface: #1e1e1e;
     --d-border: #333;
-    --d-muted: #9aa0a6;
-    --d-good: #66bb6a;
-    --d-bad: #ef5350;
+    --d-muted: #b8bdc2;
+    --d-good: #81c784;
+    --d-bad: #ff8a80;
   }
 }
 .dashboard h1 {
