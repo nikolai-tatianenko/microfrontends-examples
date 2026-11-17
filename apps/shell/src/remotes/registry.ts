@@ -1,7 +1,7 @@
 import type { Mount } from "@blog/contract";
 import { loadRemote } from "@module-federation/enhanced/runtime";
 
-export type RemoteName = "marketing" | "auth" | "dashboard" | "landing";
+type RemoteName = "marketing" | "auth" | "dashboard" | "landing";
 export type RemoteLoader = () => Promise<{ mount: Mount }>;
 export type RemoteRegistry = Record<RemoteName, RemoteLoader>;
 

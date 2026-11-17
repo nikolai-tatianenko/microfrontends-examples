@@ -57,7 +57,9 @@ function main(mode) {
   const [cmd, ...args] = COMMANDS[mode];
   const child = spawn(cmd, args, { stdio: "inherit" });
   // Ctrl+C reaches the child through the terminal; a plain SIGTERM has to be passed on. Either way, wait, then clean up.
-  process.on("SIGINT", () => {});
+  process.on("SIGINT", () => {
+    // The terminal already delivered Ctrl+C to the child; wait for it to exit.
+  });
   process.on("SIGTERM", () => child.kill("SIGTERM"));
   child.on("exit", (code) => {
     for (const [name] of routes)

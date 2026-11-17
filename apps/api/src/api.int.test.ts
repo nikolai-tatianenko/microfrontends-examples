@@ -13,21 +13,21 @@ async function gql<T = unknown>(
   });
   return (await response.json()) as {
     data?: T;
-    errors?: Array<{ message: string; extensions?: { code?: string } }>;
+    errors?: { message: string; extensions?: { code?: string } }[];
   };
 }
 
 describe("GraphQL API (over HTTP, in process)", () => {
   it("serves posts from the posts module, honouring limit", async () => {
     const { data } = await gql<{
-      posts: Array<{ id: string; imageUrl: string }>;
+      posts: { id: string; imageUrl: string }[];
     }>("{ posts(limit: 2) { id imageUrl } }");
     expect(data?.posts).toHaveLength(2);
     expect(data?.posts[0]?.imageUrl).toMatch(/^data:image\/svg\+xml/);
   });
 
   it("serves plans and exactly one highlighted tier", async () => {
-    const { data } = await gql<{ plans: Array<{ highlighted: boolean }> }>(
+    const { data } = await gql<{ plans: { highlighted: boolean }[] }>(
       "{ plans { id highlighted } }",
     );
     expect(data?.plans.filter((p) => p.highlighted)).toHaveLength(1);

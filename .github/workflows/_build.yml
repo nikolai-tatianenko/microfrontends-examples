@@ -18,6 +18,8 @@ jobs:
       - uses: ./.github/actions/setup
       - name: Build
         run: pnpm build
+      - name: Bundle size budget
+        run: pnpm bundle:check
       # package.json is uploaded only as a path anchor: upload-artifact roots the
       # archive at the least common ancestor of all matches, and with the root file
       # included that is the repository root, so `apps/*/dist` keeps its prefix.

@@ -1,3 +1,6 @@
 import { mount } from "./mount";
 
-mount(document.getElementById("root")!);
+const root = document.getElementById("root");
+if (!root) throw new Error("#root is missing from index.html");
+
+mount(root);

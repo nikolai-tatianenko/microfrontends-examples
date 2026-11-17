@@ -18,7 +18,7 @@ describe("tour steps", () => {
       el.setAttribute("data-test-id", id ?? "");
       document.body.append(el);
     }
-    const routes: Array<string | undefined> = [];
+    const routes: (string | undefined)[] = [];
     for (const step of steps) {
       go.mockClear();
       await step.before?.({} as never);

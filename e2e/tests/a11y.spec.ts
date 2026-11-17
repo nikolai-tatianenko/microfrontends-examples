@@ -6,7 +6,7 @@ import { expect, signIn, test } from "../fixtures";
  * Automation finds roughly a third of accessibility problems; keyboard and screen-reader behaviour still
  * need a human, but regressions in the machine-checkable third now fail CI.
  */
-const pages: Array<{ name: string; path: string; ready: string }> = [
+const pages: { name: string; path: string; ready: string }[] = [
   { name: "landing (shadcn remote)", path: "/", ready: "landing-stack" },
   { name: "blog", path: "/blog", ready: "content-grid" },
   { name: "pricing", path: "/pricing", ready: "pricing-grid" },

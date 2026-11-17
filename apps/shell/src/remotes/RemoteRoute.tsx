@@ -21,13 +21,13 @@ interface BoundaryProps {
 
 /** Contains a failing remote (network error, bad deploy, runtime throw) so the shell stays usable. */
 class RemoteBoundary extends Component<BoundaryProps, { error: Error | null }> {
-  state = { error: null as Error | null };
+  override state = { error: null as Error | null };
 
   static getDerivedStateFromError(error: Error) {
     return { error };
   }
 
-  render() {
+  override render() {
     const { error } = this.state;
     if (!error) return this.props.children;
     return (

@@ -9,3 +9,13 @@ onlyBuiltDependencies:
   - "@swc/core"
   - esbuild
   - unrs-resolver
+
+# Transitive dependencies with published fixes, forced to the patched release (see `pnpm audit:prod`).
+overrides:
+  undici: ">=7.30.1"
+  "@graphql-tools/utils": ">=12.0.2"
+
+# No patched picomatch exists yet; it is only reachable through vue-tsc, which never ships in a bundle.
+auditConfig:
+  ignoreGhsas:
+    - GHSA-fc5q-39xc-vjpf

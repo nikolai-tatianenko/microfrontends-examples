@@ -24,6 +24,10 @@ jobs:
         run: pnpm format:check
       - name: Typecheck
         run: pnpm typecheck
+      - name: Unused code and dependencies
+        run: pnpm knip
+      - name: Known vulnerabilities (production dependencies)
+        run: pnpm audit:prod
       - name: Commit messages (Conventional Commits)
         if: github.event_name == 'pull_request'
         run: pnpm exec commitlint --from "origin/${{ github.base_ref }}" --to HEAD

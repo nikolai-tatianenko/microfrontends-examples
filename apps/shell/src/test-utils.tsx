@@ -43,7 +43,7 @@ export function registryOf(
     "auth",
     "dashboard",
     "landing",
-  ] as const satisfies ReadonlyArray<keyof RemoteRegistry>;
+  ] as const satisfies readonly (keyof RemoteRegistry)[];
   return Object.fromEntries(
     names.map((name) => [
       name,

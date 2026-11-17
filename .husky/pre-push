@@ -3,4 +3,5 @@
 pnpm test:all
 pnpm coverage:check
 pnpm build
+pnpm bundle:check
 pnpm e2e

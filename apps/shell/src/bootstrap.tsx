@@ -1,3 +1,4 @@
+import { requireElement } from "@blog/contract";
 import { UiProvider } from "@blog/ui";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
@@ -11,7 +12,7 @@ import { hasSeenTour, markTourSeen } from "./tour/tourState";
 const autoStartTour = !hasSeenTour();
 if (autoStartTour) markTourSeen();
 
-createRoot(document.getElementById("root")!).render(
+createRoot(requireElement("root")).render(
   <StrictMode>
     <UiProvider baseline>
       <BrowserRouter>

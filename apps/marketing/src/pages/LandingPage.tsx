@@ -13,9 +13,9 @@ export function LandingPageView({
   error,
   onRetry,
 }: {
-  posts?: Posts;
+  posts?: Posts | undefined;
   loading: boolean;
-  error?: string;
+  error?: string | undefined;
   onRetry: () => void;
 }) {
   return (

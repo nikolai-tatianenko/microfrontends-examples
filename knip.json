@@ -1,0 +1,18 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema.json",
+  "ignoreWorkspaces": ["examples/vanilla/packages/*"],
+  "ignore": ["**/gql/**"],
+  "ignoreBinaries": ["portless"],
+  "workspaces": {
+    ".": {},
+    "apps/*": {
+      "ignoreDependencies": [
+        "@apollo/client",
+        "graphql",
+        "@vue/compiler-sfc",
+        "css-loader",
+        "style-loader"
+      ]
+    }
+  }
+}

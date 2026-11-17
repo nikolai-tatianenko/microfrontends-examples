@@ -3,7 +3,8 @@ import { mount as mountProducts } from "products/mount";
 
 // Each remote is independent: if one fails to load, say so in its own panel and keep the other.
 const show = (id: string, render: (el: Element) => void) => {
-  const el = document.getElementById(id)!;
+  const el = document.getElementById(id);
+  if (!el) throw new Error(`#${id} is missing from index.html`);
   try {
     render(el);
   } catch (error) {

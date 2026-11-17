@@ -16,10 +16,12 @@ export default tseslint.config(
       "playwright-report/**",
       "test-results/**",
       "**/*.cjs",
+      ".remember/**",
     ],
   },
   js.configs.recommended,
-  ...tseslint.configs.recommended,
+  ...tseslint.configs.strict,
+  ...tseslint.configs.stylistic,
   {
     languageOptions: { globals: { ...globals.browser, ...globals.node } },
     rules: {
@@ -41,6 +43,34 @@ export default tseslint.config(
       ...jsxA11y.flatConfigs.recommended.rules,
     },
   },
+  {
+    // Apps are peers and packages sit below them: nothing may import an app's source or its package.
+    // The shell reaches a remote only through the mount() contract, at runtime.
+    files: ["apps/**/*.{ts,tsx,vue}", "packages/**/*.{ts,tsx}"],
+    ignores: ["**/*.stories.tsx", "**/*.test.{ts,tsx}", "**/*.int.test.tsx"],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: [
+            {
+              group: [
+                "**/apps/**",
+                "@blog/shell",
+                "@blog/landing",
+                "@blog/marketing",
+                "@blog/auth",
+                "@blog/dashboard",
+                "@blog/api",
+              ],
+              message:
+                "Apps and packages do not import an app. Depend on @blog/contract or @blog/ui instead.",
+            },
+          ],
+        },
+      ],
+    },
+  },
   ...vue.configs["flat/essential"].map((config) => ({
     ...config,
     files: ["**/*.vue"],
@@ -58,11 +88,15 @@ export default tseslint.config(
   {
     files: [
       "**/*.{test,int.test}.{ts,tsx}",
+      "**/*.stories.tsx",
       "e2e/**",
       "scripts/**",
       "**/test-utils.tsx",
     ],
     languageOptions: { globals: { ...globals.jest } },
-    rules: { "@typescript-eslint/no-non-null-assertion": "off" },
+    rules: {
+      "@typescript-eslint/no-non-null-assertion": "off",
+      "@typescript-eslint/no-empty-function": "off",
+    },
   },
 );

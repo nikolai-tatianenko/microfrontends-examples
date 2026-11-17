@@ -5,7 +5,7 @@ import { MemoryRouter, useLocation, useNavigate } from "react-router-dom";
 import type { Mount, MountOptions, Services } from "./mount";
 
 interface BridgeProps {
-  onNavigate?: (path: string) => void;
+  onNavigate?: ((path: string) => void) | undefined;
   register: (follow: (path: string) => void) => void;
 }
 
@@ -38,7 +38,9 @@ export function createReactRemote(
 ): Mount {
   return (el, { initialPath, services, onNavigate }: MountOptions) => {
     const root = createRoot(el);
-    let follow: (path: string) => void = () => {};
+    let follow: (path: string) => void = () => {
+      // Replaced once the router mounts; a navigation before that is ignored.
+    };
     let mounted = true;
 
     root.render(

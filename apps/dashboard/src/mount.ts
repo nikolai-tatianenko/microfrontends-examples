@@ -11,7 +11,9 @@ export const mount: Mount = (el, { services }) => {
   app.mount(el);
   let mounted = true;
   return {
-    onHostNavigate() {},
+    onHostNavigate() {
+      // The dashboard has a single screen, so there is no route to follow.
+    },
     unmount() {
       if (!mounted) return;
       mounted = false;

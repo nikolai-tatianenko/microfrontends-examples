@@ -10,9 +10,9 @@ export function PricingPageView({
   error,
   onRetry,
 }: {
-  plans?: Plans;
+  plans?: Plans | undefined;
   loading: boolean;
-  error?: string;
+  error?: string | undefined;
   onRetry: () => void;
 }) {
   return (

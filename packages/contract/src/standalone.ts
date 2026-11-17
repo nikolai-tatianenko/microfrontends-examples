@@ -1,4 +1,5 @@
 import { createApolloClient } from "@blog/apollo";
+import { requireElement } from "./dom";
 import { STANDALONE_ROOT_ID, type Mount } from "./mount";
 import { createSessionStore } from "./session";
 
@@ -10,7 +11,7 @@ export function runStandalone(
   mount: Mount,
   initialPath = window.location.pathname,
 ) {
-  return mount(document.getElementById(STANDALONE_ROOT_ID)!, {
+  return mount(requireElement(STANDALONE_ROOT_ID), {
     initialPath,
     services: { session: createSessionStore(), apollo: createApolloClient() },
   });

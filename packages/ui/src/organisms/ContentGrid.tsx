@@ -8,7 +8,7 @@ import {
 export function ContentGrid({
   posts,
 }: {
-  posts: Array<BlogPostItemProps & { id: string }>;
+  posts: (BlogPostItemProps & { id: string })[];
 }) {
   return (
     <Container maxWidth="md" sx={{ py: 8 }} data-test-id="content-grid">

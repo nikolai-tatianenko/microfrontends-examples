@@ -147,26 +147,27 @@ docs/               architecture (Mermaid), ADRs, CI guide
 
 ## Commands
 
-| Command                                              | What it does                                                        |
-| ---------------------------------------------------- | ------------------------------------------------------------------- |
-| `pnpm dev`                                           | all dev servers (HMR); remotes also run standalone                  |
-| `pnpm dev:portless` · `pnpm ui:portless`             | the same, behind named `.localhost` URLs (needs portless, Node 24+) |
-| `pnpm test` / `pnpm test:integration`                | unit / integration tests, JUnit + coverage to `reports/`            |
-| `pnpm build && pnpm e2e`                             | production build, then Playwright against it                        |
-| `pnpm visual` · `pnpm visual:update`                 | visual regression · regenerate baselines **in the Linux container** |
-| `pnpm storybook`                                     | design system, 34 stories (light/dark toolbar, a11y panel)          |
-| `pnpm lint` · `pnpm typecheck` · `pnpm format:check` | static gates                                                        |
-| `pnpm commit`                                        | Commitizen prompt that writes a Conventional Commit                 |
+| Command                                               | What it does                                                        |
+| ----------------------------------------------------- | ------------------------------------------------------------------- |
+| `pnpm dev`                                            | all dev servers (HMR); remotes also run standalone                  |
+| `pnpm dev:portless` · `pnpm ui:portless`              | the same, behind named `.localhost` URLs (needs portless, Node 24+) |
+| `pnpm test` / `pnpm test:integration`                 | unit / integration tests, JUnit + coverage to `reports/`            |
+| `pnpm build && pnpm e2e`                              | production build, then Playwright against it                        |
+| `pnpm visual` · `pnpm visual:update`                  | visual regression · regenerate baselines **in the Linux container** |
+| `pnpm storybook`                                      | design system, 34 stories (light/dark toolbar, a11y panel)          |
+| `pnpm lint` · `pnpm typecheck` · `pnpm format:check`  | static gates                                                        |
+| `pnpm knip` · `pnpm audit:prod` · `pnpm bundle:check` | unused code and dependencies · known vulnerabilities · size budget  |
+| `pnpm commit`                                         | Commitizen prompt that writes a Conventional Commit                 |
 
 ## Git hooks
 
 `pnpm install` wires [Husky](https://typicode.github.io/husky/) (the `prepare` script), so the checks run before the code leaves your machine:
 
-| Hook         | Runs                                                                                                    |
-| ------------ | ------------------------------------------------------------------------------------------------------- |
-| `pre-commit` | lint-staged (ESLint and Prettier on the staged files), then `pnpm typecheck`                            |
-| `commit-msg` | commitlint: [Conventional Commits](https://www.conventionalcommits.org), English only, no tool trailers |
-| `pre-push`   | `pnpm test:all` (unit and integration), `pnpm coverage:check`, `pnpm build`, `pnpm e2e`                 |
+| Hook         | Runs                                                                                                         |
+| ------------ | ------------------------------------------------------------------------------------------------------------ |
+| `pre-commit` | lint-staged (ESLint and Prettier on the staged files), then `pnpm typecheck`                                 |
+| `commit-msg` | commitlint: [Conventional Commits](https://www.conventionalcommits.org), English only, no tool trailers      |
+| `pre-push`   | `pnpm test:all` (unit and integration), `pnpm coverage:check`, `pnpm build`, `pnpm bundle:check`, `pnpm e2e` |
 
 Write messages with `pnpm commit` (Commitizen) or by hand in the same format, for example `fix(shell): retry a failed remote`.
 Stop any dev server on :8080 or :4000 before pushing, because Playwright would reuse it instead of the production build.
@@ -180,6 +181,12 @@ Every pull request runs the same gates you can run locally, and the results are 
 
 🧪 unit tests per module with coverage · 🔗 integration tests against the real GraphQL schema ·
 🎭 end-to-end tests on the production build · ♿ automated accessibility scans (axe, WCAG 2.1 AA, light and dark) · 👁️ visual regression · 🐳 image builds and compose validation.
+
+Static checks run before any test: strict `typescript-eslint` (with `jsx-a11y`, React hooks and Vue rules), TypeScript with
+`strict`, `noUncheckedIndexedAccess`, `exactOptionalPropertyTypes` and unused-code flags, [knip](https://knip.dev) for unused
+files, exports and dependencies, an import rule that forbids one app importing another, `pnpm audit` on production
+dependencies, a gzip size budget per app (`scripts/bundle-budgets.json`), and CodeQL plus dependency review in a separate
+`security` workflow. Dependabot opens weekly update pull requests.
 
 The hand-written part of the PR body is never touched; only the block between the `ci-report` markers is
 replaced on each push. Details and diagrams: [docs/ci.md](docs/ci.md).

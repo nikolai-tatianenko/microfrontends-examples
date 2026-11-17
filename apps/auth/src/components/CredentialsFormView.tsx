@@ -7,10 +7,10 @@ export interface CredentialsFormViewProps {
   /** A request is in flight. */
   loading: boolean;
   /** Server-side error to display. */
-  error?: string;
+  error?: string | undefined;
   onSubmit: (credentials: { email: string; password: string }) => void;
   /** Ready-made account offered under the form (sign-in only); one click fills the fields. */
-  demoAccount?: { email: string; password: string };
+  demoAccount?: { email: string; password: string } | undefined;
 }
 
 const COPY = {

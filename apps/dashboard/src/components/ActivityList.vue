@@ -2,12 +2,12 @@
 import { formatWhen } from "../format";
 
 defineProps<{
-  items: ReadonlyArray<{
+  items: readonly {
     id: string;
     user: string;
     action: string;
     at: string;
-  }>;
+  }[];
 }>();
 </script>
 

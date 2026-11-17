@@ -5,7 +5,7 @@ import { PlanCard, type PlanCardProps } from "../molecules/PlanCard";
 export function PricingGrid({
   plans,
 }: {
-  plans: Array<PlanCardProps & { id: string }>;
+  plans: (PlanCardProps & { id: string })[];
 }) {
   return (
     <Container maxWidth="md" sx={{ py: 6 }} data-test-id="pricing-grid">
