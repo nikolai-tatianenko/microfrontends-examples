@@ -13,6 +13,7 @@
     "@apollo/client": "^3.13.8",
     "@blog/apollo": "workspace:*",
     "@blog/contract": "workspace:*",
+    "@blog/tokens": "workspace:*",
     "@blog/ui": "workspace:*",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",

@@ -1,0 +1,16 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { ColorTable, ContrastMatrix } from "./Foundations";
+
+<Meta title="Foundations/Colors" />
+
+# Colors
+
+Semantic names, not hues: a component asks for `color.text.muted`, never for a gray. Each token has a light and a dark value, and the CSS variable switches between them.
+
+<ColorTable />
+
+## Contrast, measured
+
+Every foreground and background the system pairs up, in both modes. Text needs 7:1 (WCAG 1.4.6, AAA); the focus ring needs 3:1 (1.4.11). The same list drives the unit test `packages/tokens/src/contrast.test.ts`, so this table cannot drift from what is enforced.
+
+<ContrastMatrix />

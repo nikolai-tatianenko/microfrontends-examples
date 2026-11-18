@@ -1,0 +1,30 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { ScaleTable, TypeSpecimen } from "./Foundations";
+
+<Meta title="Foundations/Layout and type" />
+
+# Layout and type
+
+## Type
+
+<TypeSpecimen />
+
+## Spacing
+
+<ScaleTable group="space" />
+
+## Radius
+
+<ScaleTable group="radius" />
+
+## Size
+
+The target size and the focus ring come from the accessibility criteria, so they are tokens too: a team cannot shrink a button below 44px without editing the token and a changeset.
+
+<ScaleTable group="size" />
+
+## Motion
+
+`prefers-reduced-motion: reduce` cuts every duration to 0.01ms (WCAG 2.3.3).
+
+<ScaleTable group="motion" />

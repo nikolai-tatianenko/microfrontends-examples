@@ -1,6 +1,10 @@
 export const en = {
   "app.name": "Blog",
   "a11y.skip": "Skip to main content",
+  "theme.label": "Color theme",
+  "theme.light": "Light",
+  "theme.dark": "Dark",
+  "theme.system": "Match system",
   "nav.login": "Login",
   "nav.logout": "Logout",
   "nav.primary": "Primary",

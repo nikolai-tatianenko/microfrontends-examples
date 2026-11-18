@@ -1,3 +1,4 @@
+import { cssVar } from "@blog/tokens";
 import { Box } from "@mui/material";
 import type { ReactNode } from "react";
 import { OWNERS, type OwnerName } from "./owners";
@@ -26,7 +27,7 @@ export function OwnerFrame({ owner, visible, children }: OwnerFrameProps) {
         sx={{
           display: "inline-block",
           bgcolor: color,
-          color: "#fff",
+          color: cssVar("color.owner.text"),
           fontSize: 12,
           fontWeight: 600,
           px: 1,

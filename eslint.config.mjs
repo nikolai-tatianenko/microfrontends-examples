@@ -12,6 +12,7 @@ export default tseslint.config(
       "**/node_modules/**",
       "**/storybook-static/**",
       "**/gql/**",
+      "packages/tokens/src/generated/**",
       "reports/**",
       "playwright-report/**",
       "test-results/**",

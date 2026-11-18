@@ -19,14 +19,14 @@ const trend = computed(() =>
 <style scoped>
 .tile {
   padding: 16px;
-  border: 1px solid var(--d-border);
+  border: 1px solid var(--bd-color-border-default);
   border-radius: 8px;
-  background: var(--d-surface);
+  background: var(--bd-color-surface-raised);
 }
 .label {
   margin: 0;
   font-size: 0.875rem;
-  color: var(--d-muted);
+  color: var(--bd-color-text-muted);
 }
 .value {
   margin: 4px 0 0;
@@ -38,12 +38,12 @@ const trend = computed(() =>
   font-size: 0.875rem;
 }
 .up {
-  color: var(--d-good);
+  color: var(--bd-color-positive);
 }
 .down {
-  color: var(--d-bad);
+  color: var(--bd-color-negative);
 }
 .flat {
-  color: var(--d-muted);
+  color: var(--bd-color-text-muted);
 }
 </style>

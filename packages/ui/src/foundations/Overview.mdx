@@ -1,0 +1,22 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Foundations/Overview" />
+
+# Design system
+
+One set of **design tokens**, read by three frameworks in the same page: MUI (the shell and the React remotes), Tailwind and shadcn/ui (the landing remote) and Vue (the dashboard). A token is edited once, in `packages/tokens/tokens.json`; nothing else in the repository may hard-code a color.
+
+| Layer                    | What it is                                            | Where                         |
+| ------------------------ | ----------------------------------------------------- | ----------------------------- |
+| **Tokens**               | Color, space, radius, size, motion, in light and dark | `packages/tokens/tokens.json` |
+| **Generated CSS and TS** | Custom properties and a typed object                  | `pnpm tokens:build`           |
+| **Components**           | Atoms, molecules, organisms and templates on MUI      | `packages/ui/src`             |
+| **Remotes' own styles**  | shadcn names and Vue styles mapped onto the tokens    | `landing.css`, `*.vue`        |
+
+Built to **WCAG 2.2 AAA**: text reaches 7:1 contrast in both modes, targets are at least 44 by 44px, focus draws a 3px ring, and motion stops when asked. The [Colors](?path=/docs/foundations-colors--docs) page measures every pair; a unit test fails the build when one drops below its minimum.
+
+## Using this page
+
+- Switch **Color mode** in the toolbar to see the components in light or dark. The pages here show both side by side.
+- Every story is scanned by axe (`a11y: test: "error"`), compared pixel by pixel in both modes, and listed in the PR report.
+- Read [Theming](?path=/docs/foundations-theming--docs) for how the shell's choice reaches every remote.

@@ -1,0 +1,18 @@
+{
+  "name": "@blog/tokens",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Design tokens (W3C format) and the color-mode runtime. Generated CSS and TypeScript for every framework in the page: MUI, Tailwind and Vue read the same values.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./mode": "./src/mode.ts",
+    "./tokens.css": "./src/generated/tokens.css"
+  },
+  "scripts": {
+    "typecheck": "tsc -p .",
+    "test": "jest --passWithNoTests"
+  },
+  "devDependencies": {
+    "@blog/build-config": "workspace:*"
+  }
+}

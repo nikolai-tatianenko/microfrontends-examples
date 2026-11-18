@@ -9,5 +9,6 @@ reports
 pnpm-lock.yaml
 .turbo
 **/src/gql
+packages/tokens/src/generated
 e2e/visual/__screenshots__
 *.png

@@ -23,6 +23,9 @@ function createJestConfig(dir, { env = "jsdom", coverageExclude = [] } = {}) {
     rootDir: dir,
     testEnvironment: env,
     watchman: false,
+    // Integration tests render real screens against the real schema; with every package's tests running at once
+    // (`pnpm test:all`) one takes 4-5 s, right at Jest's 5 s default. Unit tests keep the default.
+    testTimeout: kind === "integration" ? 20_000 : 5_000,
     testMatch:
       kind === "integration"
         ? ["<rootDir>/src/**/*.int.test.{ts,tsx}"]

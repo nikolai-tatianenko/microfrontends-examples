@@ -26,16 +26,16 @@ defineProps<{
   margin: 0;
   padding: 0;
   list-style: none;
-  border: 1px solid var(--d-border);
+  border: 1px solid var(--bd-color-border-default);
   border-radius: 8px;
-  background: var(--d-surface);
+  background: var(--bd-color-surface-raised);
 }
 .row {
   display: grid;
   grid-template-columns: 1fr 2fr 11rem;
   gap: 12px;
   padding: 12px 16px;
-  border-bottom: 1px solid var(--d-border);
+  border-bottom: 1px solid var(--bd-color-border-default);
 }
 .row:last-child {
   border-bottom: 0;
@@ -45,7 +45,7 @@ defineProps<{
 }
 .when {
   text-align: right;
-  color: var(--d-muted);
+  color: var(--bd-color-text-muted);
   font-size: 0.875rem;
 }
 @media (max-width: 600px) {

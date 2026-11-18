@@ -67,36 +67,19 @@ onMounted(refresh);
 
 <style>
 .dashboard {
-  --d-surface: #fff;
-  --d-border: #e0e0e0;
-  --d-muted: #4a4f54;
-  --d-good: #14612c;
-  --d-bad: #a31515;
   max-width: 900px;
   margin: 0 auto;
   padding: 32px 16px;
-  font-family:
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    sans-serif;
-}
-@media (prefers-color-scheme: dark) {
-  .dashboard {
-    --d-surface: #1e1e1e;
-    --d-border: #333;
-    --d-muted: #b8bdc2;
-    --d-good: #81c784;
-    --d-bad: #ff8a80;
-  }
+  font-family: var(--bd-font-family-sans);
+  color: var(--bd-color-text-default);
+  background: var(--bd-color-surface-default);
 }
 .dashboard h1 {
   margin: 0 0 4px;
 }
 .dashboard .signed-in-as {
   margin: 0 0 24px;
-  color: var(--d-muted);
+  color: var(--bd-color-text-muted);
 }
 .dashboard .stats {
   display: grid;
@@ -109,7 +92,7 @@ onMounted(refresh);
   gap: 12px;
   align-items: center;
   padding: 12px 16px;
-  border: 1px solid var(--d-bad);
+  border: 1px solid var(--bd-color-negative);
   border-radius: 8px;
 }
 </style>

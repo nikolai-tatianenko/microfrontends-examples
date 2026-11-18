@@ -21,7 +21,7 @@ const ICONS: Record<(typeof copy.pillars)[number]["icon"], LucideIcon> = {
 export function Hero() {
   return (
     <section
-      className="flex flex-col items-center gap-6 bg-[radial-gradient(ellipse_70%_60%_at_50%_0%,oklch(0.62_0.17_255/0.14),transparent),radial-gradient(ellipse_40%_40%_at_85%_10%,oklch(0.68_0.17_145/0.1),transparent),radial-gradient(ellipse_40%_40%_at_15%_20%,oklch(0.72_0.17_55/0.1),transparent)] px-6 py-20 text-center"
+      className="flex flex-col items-center gap-6 bg-[radial-gradient(ellipse_70%_60%_at_50%_0%,var(--bd-color-glow-blue),transparent),radial-gradient(ellipse_40%_40%_at_85%_10%,var(--bd-color-glow-green),transparent),radial-gradient(ellipse_40%_40%_at_15%_20%,var(--bd-color-glow-orange),transparent)] px-6 py-20 text-center"
       data-test-id="landing-hero"
     >
       <Badge variant="outline">{copy.badge}</Badge>

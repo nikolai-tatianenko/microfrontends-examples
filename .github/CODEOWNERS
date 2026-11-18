@@ -1,0 +1,8 @@
+# Who must review a change. The design system is shared by every remote, so changes to it are never a drive-by.
+*                         @nikolai-tatianenko
+
+# Design tokens, the component library and the color-mode contract
+/packages/tokens/         @nikolai-tatianenko
+/packages/ui/             @nikolai-tatianenko
+/scripts/build-tokens.mjs @nikolai-tatianenko
+/scripts/lint-tokens.mjs  @nikolai-tatianenko

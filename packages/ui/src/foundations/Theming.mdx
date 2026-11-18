@@ -1,0 +1,19 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Foundations/Theming" />
+
+# Theming across micro-apps
+
+The shell is the only place a visitor can change the color mode, and it communicates the choice in one way: an attribute on `<html>`.
+
+```html
+<html data-theme="dark"></html>
+```
+
+- **Shell:** `getModeStore()` (from `@blog/tokens/mode`) remembers the choice (light, dark or match the system), follows the OS while it is "system" and sets `data-theme`. The `ThemeToggle` atom is its control.
+- **CSS remotes (Vue, Tailwind):** read custom properties such as `--bd-color-surface-default`. The generated stylesheet redefines them under `:root[data-theme="dark"]`, so a switch repaints them with no JavaScript.
+- **MUI remotes:** `UiProvider` calls `useMode()`, which reads the attribute and watches it, then builds the theme from the same tokens.
+- **Standalone:** with no host, the remote's entry owns the mode, so every remote runs alone exactly as it runs composed.
+- **Forced colors:** `@media (forced-colors: active)` maps the color tokens onto system colors, so the page follows Windows high-contrast themes.
+
+No remote receives theme props, and none keeps a copy of a color. That is what lets a remote be deployed on its own and still match the host.

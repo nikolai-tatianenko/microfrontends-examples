@@ -26,6 +26,7 @@ What this setup gives a team, and where in the repo you can check each claim:
 | **Frameworks and bundlers can differ**      | React, Vue 3, Rspack and Vite remotes load through the same contract and share one React instance.                | [`apps/dashboard`](apps/dashboard), [`apps/landing`](apps/landing)                                                           |
 | **Changes are safe to ship**                | Unit, integration, end-to-end and visual tests, an accessibility scan (WCAG 2.2 AAA) and a per-file coverage bar. | [measured test review](docs/test-review.md), [ADR 0005](docs/adr/0005-testing-strategy.md)                                   |
 | **Accessible to WCAG 2.2 AAA**              | 7:1 contrast, 44px targets, a skip link, a visible focus ring and reduced motion, in light and dark.              | [`docs/accessibility.md`](docs/accessibility.md), [`e2e/tests/a11y-aaa.spec.ts`](e2e/tests/a11y-aaa.spec.ts)                 |
+| **One design system across three stacks**   | Design tokens (W3C format) feed MUI, Tailwind and Vue; the shell switches light, dark or system for every remote. | [`docs/design-system.md`](docs/design-system.md), [ADR 0012](docs/adr/0012-design-tokens-as-the-shared-contract.md)          |
 | **Reviews show the evidence**               | CI writes its results into the pull request description; hooks enforce Conventional Commits before a push.        | [`docs/ci.md`](docs/ci.md), [Git hooks](#git-hooks)                                                                          |
 | **The costs are written down, not hidden**  | Decision records and a list of known limits say what was traded away and when not to use this.                    | [Do you need microfrontends?](docs/why-microfrontends.md), [Known limits](#known-limits-deliberate-and-what-i-would-do-next) |
 
@@ -136,6 +137,7 @@ apps/
   api/          GraphQL API, one module per domain
 packages/
   contract/     the mount() contract + session store (framework-agnostic)
+  tokens/       design tokens (W3C format) → CSS + TypeScript, and the color-mode runtime
   ui/           design system: atoms → templates, theme (light/dark), i18n, Storybook
   apollo/       Apollo client factory + SchemaLink test helper
   build-config/ one Rspack + Module Federation factory, one Jest preset
@@ -155,7 +157,8 @@ docs/               architecture (Mermaid), ADRs, CI guide
 | `pnpm test` / `pnpm test:integration`                 | unit / integration tests, JUnit + coverage to `reports/`            |
 | `pnpm build && pnpm e2e`                              | production build, then Playwright against it                        |
 | `pnpm visual` · `pnpm visual:update`                  | visual regression · regenerate baselines **in the Linux container** |
-| `pnpm storybook`                                      | design system, 34 stories (light/dark toolbar, a11y panel)          |
+| `pnpm storybook`                                      | design system: Foundations pages, 39 stories (light/dark, a11y)     |
+| `pnpm tokens:build` · `pnpm design:check`             | regenerate the tokens · generated files fresh, no color literals    |
 | `pnpm lint` · `pnpm typecheck` · `pnpm format:check`  | static gates                                                        |
 | `pnpm knip` · `pnpm audit:prod` · `pnpm bundle:check` | unused code and dependencies · known vulnerabilities · size budget  |
 | `pnpm commit`                                         | Commitizen prompt that writes a Conventional Commit                 |
@@ -164,11 +167,11 @@ docs/               architecture (Mermaid), ADRs, CI guide
 
 `pnpm install` wires [Husky](https://typicode.github.io/husky/) (the `prepare` script), so the checks run before the code leaves your machine:
 
-| Hook         | Runs                                                                                                         |
-| ------------ | ------------------------------------------------------------------------------------------------------------ |
-| `pre-commit` | lint-staged (ESLint and Prettier on the staged files), then `pnpm typecheck`                                 |
-| `commit-msg` | commitlint: [Conventional Commits](https://www.conventionalcommits.org), English only, no tool trailers      |
-| `pre-push`   | `pnpm test:all` (unit and integration), `pnpm coverage:check`, `pnpm build`, `pnpm bundle:check`, `pnpm e2e` |
+| Hook         | Runs                                                                                                                              |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| `pre-commit` | lint-staged (ESLint and Prettier on the staged files), then `pnpm typecheck`                                                      |
+| `commit-msg` | commitlint: [Conventional Commits](https://www.conventionalcommits.org), English only, no tool trailers                           |
+| `pre-push`   | `pnpm design:check`, `pnpm test:all` (unit and integration), `pnpm coverage:check`, `pnpm build`, `pnpm bundle:check`, `pnpm e2e` |
 
 Write messages with `pnpm commit` (Commitizen) or by hand in the same format, for example `fix(shell): retry a failed remote`.
 Stop any dev server on :8080 or :4000 before pushing, because Playwright would reuse it instead of the production build.

@@ -1,3 +1,4 @@
+import { tokens } from "@blog/tokens";
 import { useTheme } from "@mui/material";
 import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -62,7 +63,7 @@ export function GuidedTour({ onEnd }: GuidedTourProps) {
         backgroundColor: theme.palette.background.paper,
         arrowColor: theme.palette.background.paper,
         textColor: theme.palette.text.primary,
-        overlayColor: "rgba(0, 0, 0, 0.6)",
+        overlayColor: tokens.light.color.scrim,
       }}
     />
   );

@@ -1,6 +1,6 @@
 # 0010 · A remote may use its own styling stack, if it stays scoped
 
-**Status:** accepted
+**Status:** accepted · tokens and color mode amended by [0012](0012-design-tokens-as-the-shared-contract.md)
 
 ## Context
 

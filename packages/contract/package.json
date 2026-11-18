@@ -18,7 +18,8 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.0",
-    "@blog/apollo": "workspace:*"
+    "@blog/apollo": "workspace:*",
+    "@blog/tokens": "workspace:*"
   },
   "devDependencies": {
     "@blog/build-config": "workspace:*"

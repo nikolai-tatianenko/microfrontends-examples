@@ -44,16 +44,16 @@ flowchart LR
   class S,PRB out;
 ```
 
-| Workflow           | Concern                                                                  | Produces                                           |
-| ------------------ | ------------------------------------------------------------------------ | -------------------------------------------------- |
-| `_quality.yml`     | lint, `format:check`, typecheck, `scripts/ci` self-test                  | —                                                  |
-| `_unit.yml`        | `pnpm test`                                                              | artifact `reports-unit`                            |
-| `_integration.yml` | `pnpm test:integration`                                                  | artifact `reports-integration`                     |
-| `_build.yml`       | `pnpm build`                                                             | artifact `build-dist`                              |
-| `_e2e.yml`         | `pnpm e2e` on the production build, in the Playwright image              | artifact `reports-e2e`, traces on failure          |
-| `_visual.yml`      | `pnpm visual` in the same image                                          | artifact `reports-visual` (+ raw diffs on failure) |
-| `_docker.yml`      | buildx per app (`infra/Dockerfile`, `APP` build-arg), compose validation | — (no push)                                        |
-| `_report.yml`      | render + publish                                                         | job summary, PR block                              |
+| Workflow           | Concern                                                                             | Produces                                           |
+| ------------------ | ----------------------------------------------------------------------------------- | -------------------------------------------------- |
+| `_quality.yml`     | lint, `format:check`, typecheck, design tokens, knip, audit, `scripts/ci` self-test | —                                                  |
+| `_unit.yml`        | `pnpm test`                                                                         | artifact `reports-unit`                            |
+| `_integration.yml` | `pnpm test:integration`                                                             | artifact `reports-integration`                     |
+| `_build.yml`       | `pnpm build`                                                                        | artifact `build-dist`                              |
+| `_e2e.yml`         | `pnpm e2e` on the production build, in the Playwright image                         | artifact `reports-e2e`, traces on failure          |
+| `_visual.yml`      | `pnpm visual` in the same image                                                     | artifact `reports-visual` (+ raw diffs on failure) |
+| `_docker.yml`      | buildx per app (`infra/Dockerfile`, `APP` build-arg), compose validation            | — (no push)                                        |
+| `_report.yml`      | render + publish                                                                    | job summary, PR block                              |
 
 `.github/actions/setup` is the one place that knows how to get a workspace ready: corepack → `packageManager` pnpm → Node from `.nvmrc` with the pnpm cache → `pnpm install --frozen-lockfile` → `pnpm run --if-present codegen` (GraphQL types are generated, not committed).
 

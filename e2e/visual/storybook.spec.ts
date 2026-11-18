@@ -4,8 +4,8 @@ import { expect, test } from "@playwright/test";
 import { expectNoA11yViolations } from "../a11y";
 
 /**
- * One baseline, one accessibility scan (axe, WCAG 2.1 A/AA) and one row in the PR report per Storybook story: the design system is
- * regression-tested without writing a test per component. Add a story, get a visual test.
+ * One baseline, one accessibility scan (axe, WCAG 2.2 A/AA/AAA) and one row in the PR report per Storybook story and color mode: the
+ * design system is regression-tested in light and dark without writing a test per component. Add a story, get four checks.
  * Needs `pnpm --filter @blog/ui build-storybook` (the `visual` script does it).
  */
 interface Entry {
@@ -27,12 +27,16 @@ const stories = Object.values(
 test.use({ viewport: { width: 800, height: 600 } });
 
 for (const story of stories) {
-  test(`${story.title} · ${story.name}`, async ({ page }) => {
-    await page.goto(`/_storybook/iframe.html?id=${story.id}&viewMode=story`);
-    await page.locator("#storybook-root > *").first().waitFor();
-    await expectNoA11yViolations(page, "#storybook-root");
-    await expect(page).toHaveScreenshot(`${story.id}.png`, {
-      animations: "disabled",
+  for (const mode of ["light", "dark"] as const) {
+    test(`${story.title} · ${story.name} · ${mode}`, async ({ page }) => {
+      await page.goto(
+        `/_storybook/iframe.html?id=${story.id}&viewMode=story&globals=theme:${mode}`,
+      );
+      await page.locator("#storybook-root > *").first().waitFor();
+      await expectNoA11yViolations(page, "#storybook-root");
+      await expect(page).toHaveScreenshot(`${story.id}-${mode}.png`, {
+        animations: "disabled",
+      });
     });
-  });
+  }
 }

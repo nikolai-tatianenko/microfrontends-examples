@@ -1,0 +1,51 @@
+name: storybook
+
+# Publishes the design-system documentation (Storybook) to GitHub Pages.
+# One-time setup: repository Settings -> Pages -> Source = "GitHub Actions".
+on:
+  push:
+    branches: [main]
+    paths:
+      - "packages/tokens/**"
+      - "packages/ui/**"
+      - "pnpm-lock.yaml"
+      - "apps/*/src/**/*.stories.tsx"
+      - ".github/workflows/storybook.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: pages
+  cancel-in-progress: false # a deploy that is already publishing must finish
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build Storybook
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ./.github/actions/setup
+      - name: Build
+        run: pnpm --filter @blog/ui build-storybook
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: packages/ui/storybook-static
+
+  deploy:
+    name: Deploy to GitHub Pages
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

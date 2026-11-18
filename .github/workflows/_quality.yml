@@ -24,6 +24,8 @@ jobs:
         run: pnpm format:check
       - name: Typecheck
         run: pnpm typecheck
+      - name: Design tokens are generated and nothing hard-codes a color
+        run: pnpm design:check
       - name: Unused code and dependencies
         run: pnpm knip
       - name: Known vulnerabilities (production dependencies)

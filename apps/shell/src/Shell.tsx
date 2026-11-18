@@ -1,5 +1,6 @@
 import type { Services } from "@blog/contract";
-import { CONTENT_ID, Header, SkipLink, useT } from "@blog/ui";
+import { getModeStore } from "@blog/tokens/mode";
+import { CONTENT_ID, Header, SkipLink, ThemeToggle, useT } from "@blog/ui";
 import { Box, Button, FormControlLabel, Switch } from "@mui/material";
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import {
@@ -37,6 +38,11 @@ export function Shell({
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const t = useT();
+  const modeStore = getModeStore();
+  const modePreference = useSyncExternalStore(
+    modeStore.subscribe,
+    modeStore.getPreference,
+  );
   const [showOwners, setShowOwners] = useState(true);
   // A number, not a boolean: each start is a new key, so the tour always begins at its first step.
   const [tourRun, setTourRun] = useState<number | null>(
@@ -79,6 +85,10 @@ export function Shell({
                 >
                   {t("tour.start")}
                 </Button>
+                <ThemeToggle
+                  value={modePreference}
+                  onChange={modeStore.setPreference}
+                />
                 <FormControlLabel
                   label={t("owners.toggle")}
                   sx={{ m: 0 }}

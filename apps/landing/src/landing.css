@@ -8,38 +8,24 @@
 @import "tailwindcss/utilities.css" layer(utilities);
 @source ".";
 
-/* shadcn/ui tokens (neutral base). Muted text is darker than shadcn's default so it keeps 4.5:1 on muted surfaces. */
+/*
+ * shadcn/ui's semantic names, mapped onto the design tokens the shell loads (packages/tokens). The values and the
+ * light/dark switch live there; this remote keeps none of its own, so a token change reaches it with no edit here.
+ */
 .landing-root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.45 0 0);
-  --border: oklch(0.922 0 0);
-  --ring: oklch(0.35 0 0);
-  --radius: 0.625rem;
-}
-
-@media (prefers-color-scheme: dark) {
-  .landing-root {
-    --background: oklch(0.145 0 0);
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.75 0 0);
-    --border: oklch(1 0 0 / 14%);
-    --ring: oklch(0.708 0 0);
-  }
+  --background: var(--bd-color-surface-default);
+  --foreground: var(--bd-color-text-default);
+  --card: var(--bd-color-surface-raised);
+  --card-foreground: var(--bd-color-text-default);
+  --primary: var(--bd-color-primary-default);
+  --primary-foreground: var(--bd-color-text-on-primary);
+  --secondary: var(--bd-color-surface-muted);
+  --secondary-foreground: var(--bd-color-text-default);
+  --muted: var(--bd-color-surface-muted);
+  --muted-foreground: var(--bd-color-text-muted);
+  --border: var(--bd-color-border-default);
+  --ring: var(--bd-color-focus);
+  --radius: var(--bd-radius-lg);
 }
 
 @theme inline {

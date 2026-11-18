@@ -1,3 +1,4 @@
+import { cssVar } from "@blog/tokens";
 import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
 import type { ReactNode } from "react";
 import { Link as RouterLink, useLocation } from "react-router-dom";
@@ -43,10 +44,38 @@ function BrandMark() {
       aria-hidden
       sx={{ width: 28, height: 28, flexShrink: 0 }}
     >
-      <rect x="2" y="2" width="9" height="9" rx="2.5" fill="#1565c0" />
-      <rect x="13" y="2" width="9" height="9" rx="2.5" fill="#2e7d32" />
-      <rect x="2" y="13" width="9" height="9" rx="2.5" fill="#ef6c00" />
-      <rect x="13" y="13" width="9" height="9" rx="2.5" fill="#6a1b9a" />
+      <rect
+        x="2"
+        y="2"
+        width="9"
+        height="9"
+        rx="2.5"
+        style={{ fill: cssVar("color.brand.blue") }}
+      />
+      <rect
+        x="13"
+        y="2"
+        width="9"
+        height="9"
+        rx="2.5"
+        style={{ fill: cssVar("color.brand.green") }}
+      />
+      <rect
+        x="2"
+        y="13"
+        width="9"
+        height="9"
+        rx="2.5"
+        style={{ fill: cssVar("color.brand.orange") }}
+      />
+      <rect
+        x="13"
+        y="13"
+        width="9"
+        height="9"
+        rx="2.5"
+        style={{ fill: cssVar("color.brand.purple") }}
+      />
     </Box>
   );
 }
