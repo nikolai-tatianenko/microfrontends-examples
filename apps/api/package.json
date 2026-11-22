@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@blog/build-config": "workspace:*",
-    "esbuild": "^0.25.9",
+    "esbuild": "^0.28.2",
     "tsx": "^4.20.5"
   },
   "exports": {
