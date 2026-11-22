@@ -92,8 +92,9 @@ jobs:
       - uses: ./.github/actions/setup
       - name: Build
         run: pnpm build
+      # Already inside the Playwright container, so run the project directly; `visual:update` wraps docker.
       - name: Regenerate baselines
-        run: pnpm visual:update
+        run: pnpm visual --update-snapshots
       - name: Commit and push
         run: |
           git config --global --add safe.directory "$GITHUB_WORKSPACE"
