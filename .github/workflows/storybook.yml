@@ -30,7 +30,7 @@ jobs:
       - uses: ./.github/actions/setup
       - name: Build
         run: pnpm --filter @blog/ui build-storybook
-      - uses: actions/upload-pages-artifact@v4
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: packages/ui/storybook-static
 
