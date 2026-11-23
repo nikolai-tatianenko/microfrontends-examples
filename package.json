@@ -76,7 +76,7 @@
     "knip": "^6.45.1",
     "lint-staged": "^17.6.0",
     "prettier": "3.6.2",
-    "turbo": "2.5.8",
+    "turbo": "2.9.14",
     "typescript": "5.9.3",
     "typescript-eslint": "^8.43.0",
     "vue-tsc": "^3.0.6"
