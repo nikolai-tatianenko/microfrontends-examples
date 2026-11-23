@@ -72,7 +72,7 @@
     "istanbul-lib-coverage": "^3.2.2",
     "jest": "^30.1.0",
     "jest-environment-jsdom": "^30.1.0",
-    "jest-junit": "^16.0.0",
+    "jest-junit": "^17.0.0",
     "knip": "^6.45.1",
     "lint-staged": "^17.6.0",
     "prettier": "3.6.2",
