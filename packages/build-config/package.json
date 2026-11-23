@@ -9,8 +9,8 @@
     "./jest-preset": "./jest-preset.cjs"
   },
   "dependencies": {
-    "@module-federation/enhanced": "^2.9.2",
-    "@rspack/core": "^2.3.0",
+    "@module-federation/enhanced": "^2.9.3",
+    "@rspack/core": "^2.3.3",
     "css-loader": "^7.1.2",
     "style-loader": "^4.0.0",
     "vue-loader": "^17.4.2"
